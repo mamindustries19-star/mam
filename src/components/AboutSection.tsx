@@ -76,9 +76,12 @@ const AboutSection = () => {
               href="https://quikolasers.com/wp-content/uploads/2019/05/Quiko-Lasers.jpg"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block font-oswald text-sm font-semibold text-primary hover:text-primary/80 transition-colors underline underline-offset-4"
+              className="group inline-flex items-center gap-3 font-oswald text-sm font-semibold uppercase tracking-widest text-primary-foreground bg-primary px-5 py-3 rounded hover:bg-primary/90 transition-all duration-300 shadow-md hover:shadow-primary/40 hover:shadow-lg hover:-translate-y-0.5"
             >
-              Download Our Brochure →
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:animate-bounce">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Download Our Brochure
             </a>
           </motion.div>
         </div>

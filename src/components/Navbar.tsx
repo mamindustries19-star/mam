@@ -95,9 +95,7 @@ const Navbar = () => {
             <img
               src="/images/quiko-logo.png"
               alt="Quiko Lasers - Shaping Your Ideas"
-              className={`h-12 md:h-14 object-contain transition-all duration-300 ${
-                scrolled ? "brightness-0 invert" : ""
-              }`}
+              className="h-12 md:h-14 object-contain"
             />
           </a>
 

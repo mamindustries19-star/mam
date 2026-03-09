@@ -52,7 +52,7 @@ const ServiceCard = ({
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.5, delay: index * 0.15 }}
-    className="bg-card border border-border p-6 text-center hover:shadow-lg transition-all duration-300 group flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0"
+    className="bg-card border border-border p-4 md:p-6 text-center hover:shadow-lg transition-all duration-300 group flex-[0_0_85%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0"
   >
     <img
       src={item.icon}
@@ -116,7 +116,7 @@ const ServiceCarousel = ({
 
       <div className="relative">
         <div className="overflow-hidden" ref={emblaRef}>
-          <div className="flex gap-8">
+          <div className="flex gap-4 md:gap-8">
             {items.map((item, i) => (
               <ServiceCard key={item.title} item={item} index={i} />
             ))}
@@ -125,17 +125,17 @@ const ServiceCarousel = ({
 
         {/* Navigation buttons */}
         <button
-          className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-primary/10 backdrop-blur-sm rounded-full flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 opacity-80 hover:opacity-100 z-10"
+          className="absolute -left-1 md:left-4 top-1/2 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 bg-primary/10 backdrop-blur-sm rounded-full flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 opacity-80 hover:opacity-100 z-10"
           onClick={scrollPrev}
         >
-          <ChevronLeft size={20} />
+          <ChevronLeft size={18} />
         </button>
         
         <button
-          className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-primary/10 backdrop-blur-sm rounded-full flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 opacity-80 hover:opacity-100 z-10"
+          className="absolute -right-1 md:right-4 top-1/2 -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 bg-primary/10 backdrop-blur-sm rounded-full flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 opacity-80 hover:opacity-100 z-10"
           onClick={scrollNext}
         >
-          <ChevronRight size={20} />
+          <ChevronRight size={18} />
         </button>
       </div>
     </div>

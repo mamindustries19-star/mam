@@ -76,7 +76,7 @@ const AboutSection = () => {
               href="https://quikolasers.com/wp-content/uploads/2019/05/Quiko-Lasers.jpg"
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-3 font-oswald text-sm font-semibold uppercase tracking-widest text-primary-foreground bg-primary px-5 py-3 rounded hover:bg-secondary hover:text-secondary-foreground transition-all duration-300 shadow-md hover:shadow-secondary/40 hover:shadow-xl hover:-translate-y-1 hover:scale-105 active:scale-95 active:translate-y-0"
+              className="group inline-flex items-center gap-2 md:gap-3 font-oswald text-xs md:text-sm font-semibold uppercase tracking-widest text-primary-foreground bg-primary px-4 md:px-5 py-2.5 md:py-3 rounded hover:bg-secondary hover:text-secondary-foreground transition-all duration-300 shadow-md hover:shadow-secondary/40 hover:shadow-xl hover:-translate-y-1 hover:scale-105 active:scale-95 active:translate-y-0"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:animate-bounce group-hover:text-secondary-foreground transition-colors duration-300">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>

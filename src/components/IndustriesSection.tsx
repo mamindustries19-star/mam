@@ -90,7 +90,7 @@ const IndustriesSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.08 }}
-                className="industry-card flex-shrink-0 w-[280px] bg-card border border-border p-8 text-center"
+                className="industry-card flex-shrink-0 w-[200px] md:w-[280px] bg-card border border-border p-4 md:p-8 text-center"
               >
                 <img
                   src={ind.icon}

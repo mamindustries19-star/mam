@@ -75,7 +75,7 @@ const Navbar = () => {
       <nav
         className={`fixed left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "top-0 bg-quiko-dark/95 backdrop-blur-sm shadow-lg py-1"
+            ? "top-0 bg-background shadow-lg py-1"
             : "top-[36px] bg-background py-3"
         }`}
       >
@@ -95,9 +95,7 @@ const Navbar = () => {
             <img
               src="/images/quiko-logo.png"
               alt="Quiko Lasers - Shaping Your Ideas"
-              className={`h-12 md:h-14 object-contain transition-all duration-300 ${
-                scrolled ? "brightness-0 invert" : ""
-              }`}
+              className="h-12 md:h-14 object-contain"
             />
           </a>
 
@@ -111,9 +109,7 @@ const Navbar = () => {
                   className={`nav-link-animate font-oswald text-sm font-medium uppercase tracking-widest transition-colors ${
                     activeLabel === item.label
                       ? "text-primary"
-                      : scrolled
-                        ? "text-secondary-foreground hover:text-primary"
-                        : "text-foreground hover:text-primary"
+                      : "text-foreground hover:text-primary"
                   }`}
                 >
                   {item.label}
@@ -124,7 +120,7 @@ const Navbar = () => {
 
           {/* Mobile toggle */}
           <button
-            className={`md:hidden ${scrolled ? "text-secondary-foreground" : "text-foreground"}`}
+            className="md:hidden text-foreground"
             onClick={() => setMobileOpen(!mobileOpen)}
           >
             {mobileOpen ? <X size={24} /> : <Menu size={24} />}

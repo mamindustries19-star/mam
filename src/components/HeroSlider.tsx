@@ -92,7 +92,7 @@ const HeroSlider = () => {
       {/* Feature boxes overlapping bottom of hero */}
       <div className="absolute bottom-0 left-0 right-0 z-10">
         <div className="container mx-auto px-6">
-          <div className="grid grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {features.map((feature, index) => (
               <motion.div
                 key={feature.title}

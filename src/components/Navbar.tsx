@@ -83,7 +83,7 @@ const Navbar = () => {
         className={`fixed left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
             ? "top-0 bg-background shadow-lg py-1"
-            : "top-[36px] bg-background py-3"
+            : "top-0 md:top-[36px] bg-background py-2 md:py-3"
         }`}
       >
         {/* Yellow hazard stripe when scrolled */}

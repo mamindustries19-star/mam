@@ -1,17 +1,20 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const navItems = [
-  { label: "Quiko", href: "#section-top" },
-  { label: "Who", href: "#section-about" },
-  { label: "What", href: "#section-services" },
-  { label: "Where", href: "#section-clients" },
-  { label: "Connect", href: "#section-contact" },
+  { label: "Quiko", href: "/#section-top" },
+  { label: "Who", href: "/#section-about" },
+  { label: "What", href: "/#section-services" },
+  { label: "Where", href: "/#section-clients" },
+  { label: "Connect", href: "/associate" },
 ];
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -21,8 +24,23 @@ const Navbar = () => {
 
   const handleClick = (href: string) => {
     setMobileOpen(false);
-    const el = document.querySelector(href);
-    el?.scrollIntoView({ behavior: "smooth" });
+
+    // If it's a route (starts with / but no #)
+    if (href === "/associate") {
+      navigate(href);
+      return;
+    }
+
+    // If it's a hash link
+    if (href.includes("#")) {
+      const hash = href.split("#")[1];
+      if (location.pathname !== "/") {
+        navigate("/" + "#" + hash);
+      } else {
+        const el = document.getElementById(hash);
+        el?.scrollIntoView({ behavior: "smooth" });
+      }
+    }
   };
 
   return (
@@ -35,8 +53,8 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
         <a
-          href="#section-top"
-          onClick={(e) => { e.preventDefault(); handleClick("#section-top"); }}
+          href="/"
+          onClick={(e) => { e.preventDefault(); navigate("/"); }}
           className="font-oswald text-2xl font-bold text-primary tracking-wider"
         >
           QUIKO

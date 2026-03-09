@@ -1,4 +1,8 @@
 import { motion } from "framer-motion";
+import { useCallback, useEffect, useRef } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const featuredWorks = [
   {
@@ -48,7 +52,7 @@ const ServiceCard = ({
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.5, delay: index * 0.15 }}
-    className="bg-card border border-border p-6 text-center hover:shadow-lg transition-shadow duration-300 group"
+    className="bg-card border border-border p-6 text-center hover:shadow-lg transition-all duration-300 group flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0"
   >
     <img
       src={item.icon}
@@ -65,53 +69,94 @@ const ServiceCard = ({
   </motion.div>
 );
 
+const ServiceCarousel = ({ 
+  items, 
+  title, 
+  subtitle 
+}: { 
+  items: typeof featuredWorks; 
+  title: string; 
+  subtitle: string; 
+}) => {
+  const autoplayRef = useRef(Autoplay({ delay: 4000, stopOnInteraction: true }));
+  
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { 
+      loop: true,
+      align: "start",
+      skipSnaps: false,
+    },
+    [autoplayRef.current]
+  );
+
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
+
+  return (
+    <div className="mb-20">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="text-center mb-12"
+      >
+        <h4 className="font-oswald text-2xl md:text-3xl font-semibold text-foreground mb-3">
+          {title}
+        </h4>
+        <p className="text-muted-foreground font-opensans max-w-xl mx-auto">
+          {subtitle}
+        </p>
+      </motion.div>
+
+      <div className="relative">
+        <div className="overflow-hidden" ref={emblaRef}>
+          <div className="flex gap-8">
+            {items.map((item, i) => (
+              <ServiceCard key={item.title} item={item} index={i} />
+            ))}
+          </div>
+        </div>
+
+        {/* Navigation buttons */}
+        <button
+          className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-primary/10 backdrop-blur-sm rounded-full flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 opacity-80 hover:opacity-100 z-10"
+          onClick={scrollPrev}
+        >
+          <ChevronLeft size={20} />
+        </button>
+        
+        <button
+          className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-primary/10 backdrop-blur-sm rounded-full flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 opacity-80 hover:opacity-100 z-10"
+          onClick={scrollNext}
+        >
+          <ChevronRight size={20} />
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const ServicesSection = () => {
   return (
     <section id="section-services" className="py-20">
       <div className="container mx-auto px-6">
-        {/* Featured Works */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-12"
-        >
-          <h4 className="font-oswald text-2xl md:text-3xl font-semibold text-foreground mb-3">
-            Featured Works
-          </h4>
-          <p className="text-muted-foreground font-opensans max-w-xl mx-auto">
-            Best-in-class, high performance fibre optic laser cutting and marking services.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-          {featuredWorks.map((item, i) => (
-            <ServiceCard key={item.title} item={item} index={i} />
-          ))}
-        </div>
-
-        {/* Allied Works */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-12"
-        >
-          <h4 className="font-oswald text-2xl md:text-3xl font-semibold text-foreground mb-3">
-            Allied Works
-          </h4>
-          <p className="text-muted-foreground font-opensans max-w-xl mx-auto">
-            From raw material to semi-finished and finished products under one roof.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {alliedWorks.map((item, i) => (
-            <ServiceCard key={item.title} item={item} index={i} />
-          ))}
-        </div>
+        <ServiceCarousel
+          items={featuredWorks}
+          title="Featured Works"
+          subtitle="Best-in-class, high performance fibre optic laser cutting and marking services."
+        />
+        
+        <ServiceCarousel
+          items={alliedWorks}
+          title="Allied Works"
+          subtitle="From raw material to semi-finished and finished products under one roof."
+        />
       </div>
     </section>
   );

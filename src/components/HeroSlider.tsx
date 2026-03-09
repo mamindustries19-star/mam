@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Cog, Star, Users, Hourglass } from "lucide-react";
 
 const slides = [
@@ -23,6 +24,10 @@ const features = [
 const HeroSlider = () => {
   const [current, setCurrent] = useState(0);
 
+  const goTo = (index: number) => {
+    setCurrent((index + slides.length) % slides.length);
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % slides.length);
@@ -31,7 +36,22 @@ const HeroSlider = () => {
   }, []);
 
   return (
-    <section id="section-top" className="relative h-[700px] md:h-[750px] overflow-hidden">
+    <section id="section-top" className="relative h-[700px] md:h-[750px] overflow-hidden group">
+      {/* Left arrow */}
+      <button
+        onClick={() => goTo(current - 1)}
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-quiko-dark/50 border border-secondary/30 flex items-center justify-center text-secondary-foreground hover:bg-primary hover:text-primary-foreground transition-colors opacity-70 hover:opacity-100"
+      >
+        <ChevronLeft size={20} />
+      </button>
+
+      {/* Right arrow */}
+      <button
+        onClick={() => goTo(current + 1)}
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-quiko-dark/50 border border-secondary/30 flex items-center justify-center text-secondary-foreground hover:bg-primary hover:text-primary-foreground transition-colors opacity-70 hover:opacity-100"
+      >
+        <ChevronRight size={20} />
+      </button>
       <AnimatePresence mode="wait">
         <motion.div
           key={current}

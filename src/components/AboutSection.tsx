@@ -55,24 +55,21 @@ import { Star, Heart, Circle } from "lucide-react";
             transition={{ duration: 0.6, delay: 0.3 }}
             className="space-y-8"
           >
-            <div>
-              <h5 className="font-oswald text-lg font-semibold text-foreground mb-2">What We Do?</h5>
-              <p className="text-muted-foreground font-opensans text-sm">
-                Your vision is our mission. At Quiko, all ideas are welcome.
-              </p>
-            </div>
-            <div>
-              <h5 className="font-oswald text-lg font-semibold text-foreground mb-2">Why People Like Us?</h5>
-              <p className="text-muted-foreground font-opensans text-sm">
-                Reliability. We take pride in our customer service. The trust and belief in our service often leads to recurrent collaborative work.
-              </p>
-            </div>
-            <div>
-              <h5 className="font-oswald text-lg font-semibold text-foreground mb-2">What We Offer?</h5>
-              <p className="text-muted-foreground font-opensans text-sm">
-                Laser cutting, Laser Marking/Engraving, CNC bending, Welding and Powder Coating—a complete end-to-end solution for metal fabrication.
-              </p>
-            </div>
+            {[
+              { icon: Star, title: "WHAT WE DO?", desc: "Your vision is our mission. At Quiko, all ideas are welcome." },
+              { icon: Heart, title: "WHY PEOPLE LIKE US?", desc: "Reliability. We take pride in our customer service. The trust and belief in our service often leads to recurrent collaborative work." },
+              { icon: Circle, title: "WHAT WE OFFER?", desc: "Laser cutting, Laser Marking/Engraving, CNC bending, Welding and Powder Coating—a complete end-to-end solution for metal fabrication." },
+            ].map((item) => (
+              <div key={item.title} className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-12 h-12 bg-primary flex items-center justify-center rounded">
+                  <item.icon className="w-5 h-5 text-primary-foreground" />
+                </div>
+                <div>
+                  <h5 className="font-oswald text-lg font-semibold text-foreground mb-2">{item.title}</h5>
+                  <p className="text-muted-foreground font-opensans text-sm">{item.desc}</p>
+                </div>
+              </div>
+            ))}
 
             <a
               href="https://quikolasers.com/wp-content/uploads/2019/05/Quiko-Lasers.jpg"

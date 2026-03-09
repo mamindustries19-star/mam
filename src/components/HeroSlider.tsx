@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+const slides = [
   {
     image: "/images/slider-1.jpeg",
     lines: ["A RELIABLE", "METAL FABRICATION FACILITATOR"],

@@ -52,7 +52,7 @@ const ServiceCard = ({
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.5, delay: index * 0.15 }}
-    className="bg-card border border-border p-6 text-center hover:shadow-lg transition-all duration-300 group flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0"
+    className="bg-card border border-border p-4 md:p-6 text-center hover:shadow-lg transition-all duration-300 group flex-[0_0_85%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0"
   >
     <img
       src={item.icon}

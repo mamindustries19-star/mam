@@ -117,6 +117,18 @@ html {
   position: relative;
   overflow: hidden;
   cursor: pointer;
+  transition: background-color 0.4s ease;
+}
+
+.feature-overlay-box:hover {
+  background: hsl(var(--quiko-gold)) !important;
+}
+
+.feature-overlay-box:hover > .w-12,
+.feature-overlay-box:hover > .w-16,
+.feature-overlay-box:hover > svg,
+.feature-overlay-box:hover > *:not(.overlay-content) {
+  color: hsl(var(--quiko-dark));
 }
 
 .feature-overlay-box .overlay-content {

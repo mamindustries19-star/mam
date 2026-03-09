@@ -100,11 +100,11 @@ const HeroSlider = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="feature-overlay-box bg-quiko-dark/60 backdrop-blur-sm border-r border-secondary/20 last:border-r-0 py-8 px-4 text-center flex flex-col items-center justify-center"
+                className="feature-overlay-box group bg-quiko-dark/60 backdrop-blur-sm border-r border-secondary/20 last:border-r-0 py-8 px-4 text-center flex flex-col items-center justify-center"
               >
-                <feature.icon className="w-12 h-12 md:w-16 md:h-16 text-secondary-foreground mb-3" strokeWidth={1.2} />
+                <feature.icon className="w-12 h-12 md:w-16 md:h-16 text-secondary-foreground group-hover:text-quiko-dark mb-3 transition-colors" strokeWidth={1.2} />
                 <div className="section-separator mx-auto mb-3" />
-                <h5 className="font-oswald text-sm md:text-base font-semibold text-secondary-foreground tracking-wider">
+                <h5 className="font-oswald text-sm md:text-base font-semibold text-secondary-foreground group-hover:text-quiko-dark tracking-wider transition-colors">
                   {feature.title}
                 </h5>
 

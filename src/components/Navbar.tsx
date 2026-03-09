@@ -44,7 +44,7 @@ const Navbar = () => {
   return (
     <>
       {/* Top info bar */}
-      <div className={`fixed top-0 left-0 right-0 z-[60] bg-background border-b border-border transition-all duration-300 ${scrolled ? "hidden" : ""}`}>
+      <div className={`fixed top-0 left-0 right-0 z-[60] bg-background transition-all duration-300 ${scrolled ? "hidden" : ""}`}>
         <div className="container mx-auto px-6 flex items-center justify-between py-2">
           <div className="flex items-center gap-6">
             <a href="tel:+918095544429" className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors font-opensans">

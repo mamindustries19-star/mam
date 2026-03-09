@@ -61,13 +61,13 @@ const AboutSection = () => {
               { icon: Heart, title: "WHY PEOPLE LIKE US?", desc: "Reliability. We take pride in our customer service. The trust and belief in our service often leads to recurrent collaborative work." },
               { icon: Circle, title: "WHAT WE OFFER?", desc: "Laser cutting, Laser Marking/Engraving, CNC bending, Welding and Powder Coating—a complete end-to-end solution for metal fabrication." },
             ].map((item) => (
-              <div key={item.title} className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-primary flex items-center justify-center rounded">
-                  <item.icon className="w-5 h-5 text-primary-foreground" />
+              <div key={item.title} className="flex items-start gap-4 group cursor-pointer">
+                <div className="flex-shrink-0 w-12 h-12 bg-primary group-hover:bg-secondary flex items-center justify-center rounded transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg">
+                  <item.icon className="w-5 h-5 text-primary-foreground group-hover:text-secondary-foreground transition-colors duration-300" />
                 </div>
                 <div>
-                  <h5 className="font-oswald text-lg font-semibold text-foreground mb-2">{item.title}</h5>
-                  <p className="text-muted-foreground font-opensans text-sm">{item.desc}</p>
+                  <h5 className="font-oswald text-lg font-semibold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">{item.title}</h5>
+                  <p className="text-muted-foreground font-opensans text-sm group-hover:text-foreground transition-colors duration-300">{item.desc}</p>
                 </div>
               </div>
             ))}

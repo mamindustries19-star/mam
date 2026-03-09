@@ -86,13 +86,19 @@ const Navbar = () => {
           }} />
         )}
 
-        <div className="container mx-auto px-6 flex items-center justify-between">
+        <div className="container mx-auto px-6 flex items-center justify-between py-1">
           <a
             href="/"
             onClick={(e) => { e.preventDefault(); navigate("/"); }}
             className="flex items-center gap-2"
           >
-            <img src="/images/quiko-logo.png" alt="Quiko Lasers" className="h-14 md:h-16" />
+            <img
+              src="/images/quiko-logo.png"
+              alt="Quiko Lasers - Shaping Your Ideas"
+              className={`h-12 md:h-14 object-contain transition-all duration-300 ${
+                scrolled ? "brightness-0 invert" : ""
+              }`}
+            />
           </a>
 
           {/* Desktop nav */}

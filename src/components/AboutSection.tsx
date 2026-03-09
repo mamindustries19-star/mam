@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
+import { Star, Heart, Circle } from "lucide-react";
 
-const AboutSection = () => {
   return (
     <section id="section-about" className="bg-quiko-grey py-20">
       <div className="container mx-auto px-6">

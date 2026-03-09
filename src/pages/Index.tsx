@@ -1,7 +1,6 @@
 import PageLoader from "@/components/PageLoader";
 import Navbar from "@/components/Navbar";
 import HeroSlider from "@/components/HeroSlider";
-import FeatureBoxes from "@/components/FeatureBoxes";
 import AboutSection from "@/components/AboutSection";
 import ServicesSection from "@/components/ServicesSection";
 import IndustriesSection from "@/components/IndustriesSection";
@@ -13,7 +12,6 @@ const Index = () => {
       <PageLoader />
       <Navbar />
       <HeroSlider />
-      <FeatureBoxes />
       <AboutSection />
       <ServicesSection />
       <IndustriesSection />

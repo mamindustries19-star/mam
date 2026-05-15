@@ -1,5 +1,6 @@
 import SEO from "@/components/SEO";
 import Hero from "@/components/home/Hero";
+import TrustedBy from "@/components/home/TrustedBy";
 import ServicesOverview from "@/components/home/ServicesOverview";
 import WhyChoose from "@/components/home/WhyChoose";
 import Industries from "@/components/home/Industries";
@@ -7,6 +8,7 @@ import Capabilities from "@/components/home/Capabilities";
 import Process from "@/components/home/Process";
 import GalleryPreview from "@/components/home/GalleryPreview";
 import Testimonials from "@/components/home/Testimonials";
+import FAQ from "@/components/home/FAQ";
 import ContactCTA from "@/components/home/ContactCTA";
 
 const Home = () => (
@@ -17,6 +19,7 @@ const Home = () => (
       path="/"
     />
     <Hero />
+    <TrustedBy />
     <ServicesOverview />
     <WhyChoose />
     <Capabilities />
@@ -24,6 +27,7 @@ const Home = () => (
     <Process />
     <GalleryPreview />
     <Testimonials />
+    <FAQ />
     <ContactCTA />
   </>
 );

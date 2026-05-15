@@ -12,7 +12,7 @@ import ContactCTA from "@/components/home/ContactCTA";
 const Home = () => (
   <>
     <SEO
-      title="MAM Industries — Laser Cutting & Metal Fabrication in Bengaluru"
+      title="MAM Industries — Laser Cutting, CNC Bending & Metal Fabrication in Bengaluru"
       description="Precision laser cutting, CNC bending, MIG/TIG/CO2/laser welding, fabrication and powder coating in Bengaluru. Trusted by OEMs, architects and contractors."
       path="/"
     />

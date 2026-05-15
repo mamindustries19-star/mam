@@ -32,9 +32,9 @@ const Hero = () => (
         </div>
 
         <h1 className="h-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white mb-6">
-          Precision Metal Fabrication{" "}
-          <span className="text-accent">& Laser Cutting</span>{" "}
-          Engineered for Industry.
+          Precision Metal Fabrication,{" "}
+          <span className="text-accent">Laser Cutting & CNC Bending</span>{" "}
+          — Engineered for Industry.
         </h1>
 
         <p className="text-base md:text-lg text-metallic max-w-2xl leading-relaxed mb-8">

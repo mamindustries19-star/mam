@@ -2,7 +2,7 @@
 
 export const SITE = {
   name: "MAM Industries",
-  tagline: "Precision Metal Fabrication & Laser Cutting",
+  tagline: "Precision Metal Fabrication, Laser Cutting & CNC Bending",
   phone: "+91 63811 63159",
   phoneHref: "tel:+916381163159",
   email: "muthu@gmail.com",

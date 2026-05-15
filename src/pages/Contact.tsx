@@ -42,7 +42,7 @@ const Contact = () => {
   return (
     <>
       <SEO
-        title="Contact MAM Industries — Bengaluru Fabrication & Laser Cutting"
+        title="Contact MAM Industries — Bengaluru Fabrication, Laser Cutting & CNC Bending"
         description="Reach MAM Industries in Bengaluru for laser cutting, CNC bending, welding and fabrication enquiries. Get a quote within 24 hours."
         path="/contact"
       />

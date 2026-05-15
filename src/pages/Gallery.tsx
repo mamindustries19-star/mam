@@ -18,7 +18,7 @@ const Gallery = () => {
   return (
     <>
       <SEO
-        title="Project Gallery — Fabrication & Laser Cutting Work · MAM Industries"
+        title="Project Gallery — Fabrication, Laser Cutting & CNC Bending Work · MAM Industries"
         description="Browse fabrication, laser cutting, welding and finishing projects delivered by MAM Industries across Bengaluru and South India."
         path="/gallery"
       />

@@ -41,7 +41,7 @@ const Header = () => {
       <nav className={`backdrop-blur-md border-b transition-all duration-300 ${scrolled ? "bg-background/95 border-border shadow-sm" : "bg-background/80 border-transparent"}`}>
         <div className="container flex items-center justify-between h-[72px]">
           <Link to="/" className="group flex items-center gap-3">
-            <Logo className="w-12 h-12 md:w-14 md:h-14" />
+            <Logo className="w-12 h-12 md:w-14 md:h-14 drop-shadow-[0_2px_8px_hsl(var(--accent)/0.25)]" />
             <div className="leading-tight hidden sm:block border-l border-border pl-3">
               <div className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Precision</div>
               <div className="text-[10px] uppercase tracking-[0.22em] text-accent font-semibold">Fabrication</div>

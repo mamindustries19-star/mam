@@ -18,7 +18,7 @@ const Contact = () => {
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
     const data = Object.fromEntries(fd.entries());
@@ -30,13 +30,63 @@ const Contact = () => {
       setErrors(errs);
       return;
     }
+    
     setErrors({});
     setSubmitting(true);
-    setTimeout(() => {
+
+    try {
+      // Using Web3Forms for reliable email delivery
+      // 1. Get your free Access Key at https://web3forms.com/
+      // 2. Replace 'YOUR_ACCESS_KEY_HERE' with your key below
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: SITE.formAccessKey,
+          ...data,
+          subject: `New Enquiry: ${data.service} from ${data.name}`,
+          from_name: "MAM Industries Website",
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        toast({ 
+          title: "Enquiry Sent Successfully!", 
+          description: "We've received your details and will get back to you shortly." 
+        });
+        (e.target as HTMLFormElement).reset();
+      } else {
+        throw new Error(result.message || "Form submission failed");
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+      toast({ 
+        variant: "destructive",
+        title: "Submission Error", 
+        description: "We couldn't send the email. Please use the WhatsApp button below for a direct enquiry." 
+      });
+    } finally {
       setSubmitting(false);
-      (e.target as HTMLFormElement).reset();
-      toast({ title: "Enquiry received", description: "Our team will respond within 24 hours." });
-    }, 700);
+    }
+  };
+
+  const handleWhatsAppClick = (e: React.MouseEvent) => {
+    const form = (e.currentTarget.closest("form") as HTMLFormElement);
+    const fd = new FormData(form);
+    const data = Object.fromEntries(fd.entries());
+    
+    if (!data.name || !data.phone || !data.message) {
+      toast({ title: "Please fill the form", description: "Fill in your details to generate a WhatsApp message." });
+      return;
+    }
+
+    const message = `Hello MAM Industries, I'm ${data.name}.%0A%0A*Project Enquiry:*%0A- *Service:* ${data.service || 'General Enquiry'}%0A- *Phone:* ${data.phone}%0A- *Email:* ${data.email}%0A- *Details:* ${data.message}`;
+    window.open(`https://wa.me/917619365978?text=${message}`, "_blank");
   };
 
   return (
@@ -121,9 +171,13 @@ const Contact = () => {
                 >
                   {submitting ? "Sending..." : <>Send enquiry <Send size={15} /></>}
                 </button>
-                <a href={SITE.whatsapp} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 bg-highlight text-highlight-foreground px-6 py-3 rounded-md font-semibold text-sm hover:bg-highlight/90 transition-all">
+                <button
+                  type="button"
+                  onClick={handleWhatsAppClick}
+                  className="inline-flex items-center gap-2 bg-highlight text-highlight-foreground px-6 py-3 rounded-md font-semibold text-sm hover:bg-highlight/90 transition-all"
+                >
                   <MessageCircle size={16} /> Chat on WhatsApp
-                </a>
+                </button>
               </div>
             </form>
           </motion.div>

@@ -3,10 +3,11 @@
 export const SITE = {
   name: "MAM Industries",
   tagline: "Precision Metal Fabrication, Laser Cutting & CNC Bending",
-  phone: "+91 63811 63159",
-  phoneHref: "tel:+916381163159",
-  email: "muthu@gmail.com",
-  whatsapp: "https://wa.me/916381163159",
+  phone: "+91 76193 65978",
+  phoneHref: "tel:+917619365978",
+  email: "syxdmatheen.9@gmail.com",
+  whatsapp: "https://wa.me/917619365978",
+  formAccessKey: "634c75d7-4815-40d1-bced-6fa62f7bcc92",
   address: {
     line1: "7th Mile, No. 113, Kanakapura Main Rd",
     line2: "Yelachenahalli, Naidu Layout",
@@ -18,7 +19,7 @@ export const SITE = {
   rating: 5.0,
   yearsExperience: 15,
   projectsCompleted: 1200,
-  mapEmbed: "https://www.google.com/maps?q=7th+Mile+Kanakapura+Main+Rd+Yelachenahalli+Bengaluru+560062&output=embed",
+  mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.317582312684!2d77.5492453!3d12.8876451!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae3fd03f837385%3A0xc464736f1c7d3d1f!2s113%2C%20Kanakapura%20Rd%2C%20Naidu%20Layout%2C%20Yelachenahalli%2C%20Bengaluru%2C%20Karnataka%20560062!5e0!3m2!1sen!2sin!4v1715764000000!5m2!1sen!2sin",
 };
 
 export const NAV = [

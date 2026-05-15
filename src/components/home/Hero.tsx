@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Phone, Star, ShieldCheck, Zap } from "lucide-react";
 import { SITE } from "@/lib/site";
+import AnimatedCounter from "@/components/AnimatedCounter";
 
 const Hero = () => (
   <section className="relative isolate overflow-hidden bg-primary text-primary-foreground">
@@ -69,14 +70,16 @@ const Hero = () => (
         className="mt-14 md:mt-20 grid grid-cols-2 md:grid-cols-4 gap-px bg-white/10 border border-white/10 rounded-lg overflow-hidden backdrop-blur"
       >
         {[
-          { v: `${SITE.yearsExperience}+`, l: "Years of expertise" },
-          { v: `${SITE.projectsCompleted}+`, l: "Projects delivered" },
-          { v: "10+", l: "Industries served" },
-          { v: "±0.1mm", l: "Cut tolerance" },
+          { v: SITE.yearsExperience, suffix: "+", l: "Years of expertise" },
+          { v: SITE.projectsCompleted, suffix: "+", l: "Projects delivered" },
+          { v: 10, suffix: "+", l: "Industries served" },
+          { v: 0.1, suffix: "mm", prefix: "±", decimals: 1, l: "Cut tolerance" },
         ].map((m, i) => (
-          <div key={i} className="bg-primary/80 backdrop-blur px-5 py-6">
-            <div className="font-sora font-bold text-2xl md:text-3xl text-white">{m.v}</div>
-            <div className="text-xs text-metallic uppercase tracking-wider mt-1">{m.l}</div>
+          <div key={i} className="bg-primary/80 backdrop-blur px-5 py-6 group hover:bg-primary/60 transition-colors">
+            <div className="font-sora font-bold text-2xl md:text-3xl text-white">
+              <AnimatedCounter to={m.v} suffix={m.suffix} prefix={m.prefix} decimals={m.decimals ?? 0} />
+            </div>
+            <div className="text-xs text-metallic uppercase tracking-wider mt-1 group-hover:text-accent transition-colors">{m.l}</div>
           </div>
         ))}
       </motion.div>

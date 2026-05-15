@@ -9,9 +9,7 @@ const Footer = () => (
     <div className="container py-16 grid gap-10 md:grid-cols-12">
       <div className="md:col-span-4">
         <div className="flex items-center gap-3 mb-5">
-          <div className="bg-white/95 rounded-lg p-2 shadow-lg">
-            <Logo className="w-14 h-14" />
-          </div>
+          <Logo className="w-16 h-16" invert />
           <div className="leading-tight border-l border-white/15 pl-3">
             <div className="text-[10px] uppercase tracking-[0.22em] text-metallic">Precision</div>
             <div className="text-[10px] uppercase tracking-[0.22em] text-accent font-semibold">Fabrication</div>

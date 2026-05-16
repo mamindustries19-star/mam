@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Target, Award, Truck, Cog, Users, ShieldCheck } from "lucide-react";
 
 const items = [
-  { icon: Target, t: "Tight Tolerances", d: "Sub-millimetre accuracy on every part. Inspection at every checkpoint." },
+  { icon: Target, t: "Accuracy", d: "Sub-millimetre accuracy on every part. Inspection at every checkpoint." },
   { icon: Cog, t: "Modern Machinery", d: "CNC fibre lasers, hydraulic press brakes and automated welding cells." },
   { icon: Users, t: "Certified Workforce", d: "Skilled welders and operators with 10+ years on the shop floor." },
   { icon: Truck, t: "On-time Delivery", d: "Production schedules built around your assembly line, not ours." },
@@ -15,7 +15,7 @@ const WhyChoose = () => (
     <div className="absolute inset-0 bg-blueprint opacity-40" />
     <div className="container relative">
       <div className="max-w-2xl mb-14">
-        <span className="eyebrow">Why MAM</span>
+        <span className="eyebrow">Why Us</span>
         <h2 className="h-display text-3xl md:text-5xl mt-3 text-white">
           Built for the realities of <span className="text-accent">Indian manufacturing.</span>
         </h2>

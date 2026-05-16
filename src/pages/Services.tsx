@@ -18,7 +18,7 @@ const Services = () => (
       <div className="container relative py-20 md:py-28">
         <span className="eyebrow">Our services</span>
         <h1 className="h-display text-4xl md:text-6xl mt-3 text-white max-w-3xl">
-          Ten industrial processes. <span className="text-accent">One accountable partner.</span>
+          Twelve industrial processes. <span className="text-accent">One accountable partner.</span>
         </h1>
         <p className="text-metallic mt-5 max-w-2xl">
           A complete metal fabrication line — engineered to handle prototyping, batch production and long-term OEM supply.

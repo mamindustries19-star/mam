@@ -4,7 +4,7 @@ import { X } from "lucide-react";
 import SEO from "@/components/SEO";
 import { GALLERY } from "@/lib/site";
 
-const CATS = ["All", "Laser Cutting", "CNC Bending", "Welding", "Fabrication", "Laser Marking", "Finishing"];
+const CATS = ["All", "Laser Cutting", "CNC Bending", "MIG / CO2 Welding", "TIG Welding", "Arc / Spot Welding", "Laser Welding", "Fabrication", "Gates & Grills", "Rolling Shutters", "Sheds", "Laser Marking", "Finishing"];
 
 const Gallery = () => {
   const [cat, setCat] = useState("All");

@@ -36,8 +36,8 @@ const Footer = () => (
 
       <div className="md:col-span-3">
         <h4 className="text-sm font-semibold uppercase tracking-wider mb-4 text-white">Services</h4>
-        <ul className="space-y-2.5 text-sm text-metallic">
-          {SERVICES.slice(0, 6).map(s => (
+        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-y-2.5 gap-x-4 text-sm text-metallic">
+          {SERVICES.map(s => (
             <li key={s.slug}><Link to="/services" className="hover:text-accent transition-colors">{s.title}</Link></li>
           ))}
         </ul>

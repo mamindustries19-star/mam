@@ -19,7 +19,7 @@ const GalleryPreview = () => (
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        {GALLERY.slice(0, 8).map((g, i) => (
+        {GALLERY.slice(0, 12).map((g, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, scale: 0.95 }}
@@ -27,7 +27,7 @@ const GalleryPreview = () => (
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: (i % 4) * 0.05 }}
             className={`relative overflow-hidden rounded-md group bg-secondary ${
-              i === 0 ? "col-span-2 row-span-2 aspect-square" : "aspect-square"
+              i === 0 || i === 7 ? "col-span-2 row-span-2 aspect-square" : i === 10 || i === 11 ? "col-span-2 aspect-[2/1]" : "aspect-square"
             }`}
           >
             <img src={g.src} alt={g.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />

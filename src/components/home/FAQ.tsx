@@ -27,6 +27,18 @@ const FAQS = [
     q: "Is finishing (powder coating, plating) included?",
     a: "Yes, through trusted finishing partners we manage end-to-end. You get a single point of contact and one consolidated invoice for the full fabrication package.",
   },
+  {
+    q: "Which file formats do you accept for custom designs & CAD?",
+    a: "We accept .DXF, .DWG, .STEP, .STP, .IGS, and standard dimensional PDF blueprints. For laser cutting and nesting operations, vector formats (.DXF or .DWG) are highly preferred to expedite feasibility reviews and accurate quotation turnaround.",
+  },
+  {
+    q: "What are your standard dimensional and angle tolerances?",
+    a: "For our CNC fibre laser cutting operations, we maintain standard linear tolerances of ±0.1mm. For CNC press-brake bending, we routinely achieve precision angular tolerances of ±0.5° and linear flange tolerances of ±0.2mm, matching OEM aerospace and automotive requirements.",
+  },
+  {
+    q: "Do you offer bulk contract volume discounts for long-term OEM supply?",
+    a: "Absolutely. We offer dedicated pricing contracts (BOM agreements) for recurring monthly or quarterly requirements. We also support scheduled JIT (Just-In-Time) dispatch options and buffer-stock warehousing for critical automotive, electronic and solar OEMs.",
+  },
 ];
 
 const FAQ = () => (

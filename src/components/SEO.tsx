@@ -10,7 +10,7 @@ type Props = {
   type?: "website" | "article";
 };
 
-const SITE_URL = "https://mamindustries.in"; // Replace with actual domain if different
+const SITE_URL = "https://www.mamindustries.in"; // Replace with actual domain if different
 const DEFAULT_IMAGE = "/og-image.jpg"; // Should create this asset
 
 const SEO = ({ 

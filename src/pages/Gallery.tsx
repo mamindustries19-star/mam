@@ -1,6 +1,7 @@
 import { useMemo, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Loader2 } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
 import SEO from "@/components/SEO";
 import { GALLERY as STATIC_GALLERY } from "@/lib/site";
 import { supabase } from "@/lib/supabase";
@@ -10,10 +11,21 @@ import { getBreadcrumbSchema } from "@/lib/seo";
 const CATS = ["All", "Laser Cutting", "CNC Bending", "MIG / CO2 Welding", "TIG Welding", "Arc / Spot Welding", "Laser Welding", "Fabrication", "Gates & Grills", "Rolling Shutters", "Sheds", "Laser Marking", "Finishing"];
 
 const Gallery = () => {
+  const [searchParams] = useSearchParams();
+  const filterParam = searchParams.get("filter");
   const [cat, setCat] = useState("All");
   const [active, setActive] = useState<number | null>(null);
   const [gallery, setGallery] = useState(STATIC_GALLERY);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (filterParam) {
+      const matchedCat = CATS.find(c => c.toLowerCase() === filterParam.toLowerCase());
+      if (matchedCat) {
+        setCat(matchedCat);
+      }
+    }
+  }, [filterParam]);
 
   useEffect(() => {
     const fetchGallery = async () => {

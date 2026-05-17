@@ -4,10 +4,13 @@ export const getLocalBusinessSchema = () => ({
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "name": SITE.name,
-  "image": "https://mamindustries.in/logo.png",
-  "@id": "https://mamindustries.in",
-  "url": "https://mamindustries.in",
+  "image": "https://www.mamindustries.in/favicon.png",
+  "logo": "https://www.mamindustries.in/favicon.png",
+  "@id": "https://www.mamindustries.in/#organization",
+  "url": "https://www.mamindustries.in",
   "telephone": SITE.phone,
+  "email": SITE.email,
+  "priceRange": "$$",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": `${SITE.address.line1}, ${SITE.address.line2}`,
@@ -73,6 +76,6 @@ export const getBreadcrumbSchema = (items: { name: string; url: string }[]) => (
     "@type": "ListItem",
     "position": index + 1,
     "name": item.name,
-    "item": `https://mamindustries.in${item.url}`
+    "item": `https://www.mamindustries.in${item.url}`
   }))
 });

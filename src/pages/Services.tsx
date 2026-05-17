@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Check, Loader2 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { ArrowRight, Check, Loader2, Image } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import SEO from "@/components/SEO";
 import { SERVICES } from "@/lib/site";
 import { supabase } from "@/lib/supabase";
@@ -10,6 +10,7 @@ import { getBreadcrumbSchema } from "@/lib/seo";
 const Services = () => {
   const [services, setServices] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -38,6 +39,28 @@ const Services = () => {
     };
     fetchServices();
   }, []);
+
+  useEffect(() => {
+    if (!loading && services.length > 0) {
+      const hash = location.hash;
+      if (hash) {
+        const targetId = hash.replace("#", "");
+        const element = document.getElementById(targetId);
+        if (element) {
+          setTimeout(() => {
+            const headerOffset = 100;
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+            
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: "smooth"
+            });
+          }, 150);
+        }
+      }
+    }
+  }, [loading, services, location.hash]);
 
   return (
     <>
@@ -116,9 +139,22 @@ const Services = () => {
                     ))}
                   </div>
 
-                  <Link to={`/contact?service=${encodeURIComponent(s.title)}`} className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-5 py-3 rounded-md font-semibold text-sm hover:bg-accent/90 transition-colors">
-                    Enquire about {s.title} <ArrowRight size={15} />
-                  </Link>
+                  <div className="flex flex-wrap gap-3">
+                    <Link to={`/contact?service=${encodeURIComponent(s.title)}`} className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-5 py-3 rounded-md font-semibold text-sm hover:bg-accent/90 transition-colors">
+                      Enquire about {s.title} <ArrowRight size={15} />
+                    </Link>
+                    <Link 
+                      to={`/gallery?filter=${encodeURIComponent(
+                        s.title.includes("Fabrication") ? "Fabrication" :
+                        s.title.includes("Laser Marking") ? "Laser Marking" :
+                        (s.title.includes("Powder Coating") || s.title.includes("Finishing")) ? "Finishing" :
+                        s.title.includes("Sheds") ? "Sheds" : s.title
+                      )}`} 
+                      className="inline-flex items-center gap-2 border border-accent/30 text-accent px-5 py-3 rounded-md font-semibold text-sm hover:bg-accent/10 hover:border-accent transition-colors"
+                    >
+                      <Image size={15} /> Show Works
+                    </Link>
+                  </div>
                 </div>
               </motion.article>
             ))

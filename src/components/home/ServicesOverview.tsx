@@ -70,7 +70,7 @@ const ServicesOverview = () => {
               <div className="p-5">
                 <h3 className="font-sora font-semibold text-lg text-primary mb-1.5 group-hover:text-accent transition-colors">{s.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-2">{s.short_desc}</p>
-                <Link to="/services" className="inline-flex items-center gap-1 text-xs font-semibold text-accent uppercase tracking-wider link-underline">
+                <Link to={`/services#${s.slug}`} className="inline-flex items-center gap-1 text-xs font-semibold text-accent uppercase tracking-wider link-underline">
                   Explore service <ArrowUpRight size={14} />
                 </Link>
               </div>

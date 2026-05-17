@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, Clock, Facebook, Linkedin, Instagram, Youtube, Star } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Facebook, Instagram, Youtube, Star } from "lucide-react";
 import { NAV, SERVICES, SITE } from "@/lib/site";
 import { supabase } from "@/lib/supabase";
 import Logo from "./Logo";
@@ -102,7 +102,6 @@ const Footer = () => {
           <div className="flex gap-2 mt-5">
             {[
               { Icon: Facebook, href: config.facebook_url || "#" },
-              { Icon: Linkedin, href: config.linkedin_url || "#" },
               { Icon: Instagram, href: config.instagram_url || "#" },
               { Icon: Youtube, href: config.youtube_url || "#" }
             ].map(({ Icon, href }, i) => (

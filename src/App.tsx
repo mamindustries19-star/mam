@@ -20,6 +20,7 @@ import ClientManager from "./pages/admin/ClientManager";
 import ReviewManager from "./pages/admin/ReviewManager";
 import ServiceManager from "./pages/admin/ServiceManager";
 import ConfigManager from "./pages/admin/ConfigManager";
+import CapabilityManager from "./pages/admin/CapabilityManager";
 import EnquiryManager from "./pages/admin/EnquiryManager";
 
 const queryClient = new QueryClient();
@@ -53,6 +54,7 @@ const App = () => (
               <Route path="services" element={<ServiceManager />} />
               <Route path="enquiries" element={<EnquiryManager />} />
               <Route path="config" element={<ConfigManager />} />
+              <Route path="capabilities" element={<CapabilityManager />} />
             </Route>
           </Route>
 

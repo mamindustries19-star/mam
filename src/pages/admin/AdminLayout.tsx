@@ -10,7 +10,8 @@ import {
   Menu, 
   X,
   MessageSquare,
-  Globe
+  Globe,
+  Wrench
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { motion, AnimatePresence } from "framer-motion";
@@ -31,6 +32,7 @@ const AdminLayout = () => {
     { label: "Leads", icon: MessageSquare, href: "/admin/enquiries" },
     { label: "Gallery", icon: Image, href: "/admin/gallery" },
     { label: "Services", icon: Briefcase, href: "/admin/services" },
+    { label: "Capabilities", icon: Wrench, href: "/admin/capabilities" },
     { label: "Clients", icon: Users, href: "/admin/clients" },
     { label: "Reviews", icon: MessageSquare, href: "/admin/reviews" },
     { label: "Site Config", icon: Settings, href: "/admin/config" },

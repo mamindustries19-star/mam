@@ -185,6 +185,64 @@ const ConfigManager = () => {
           </div>
         </section>
 
+        {/* Social Media Links */}
+        <section className="bg-secondary/50 border border-white/5 rounded-xl p-6">
+          <h2 className="text-xs uppercase tracking-[0.2em] text-accent font-bold mb-6 flex items-center gap-2">
+            <Globe size={14} />
+            Social Media Links
+          </h2>
+          <div className="grid sm:grid-cols-2 gap-6">
+            <div>
+              <label className="text-xs uppercase tracking-widest text-metallic font-semibold mb-2 flex items-center gap-2">
+                Facebook Page URL
+              </label>
+              <input
+                type="url"
+                value={config.facebook_url || ""}
+                onChange={(e) => handleChange("facebook_url", e.target.value)}
+                placeholder="https://facebook.com/yourpage"
+                className="w-full bg-primary border border-white/10 rounded-md p-3 text-white focus:border-accent outline-none text-sm"
+              />
+            </div>
+            <div>
+              <label className="text-xs uppercase tracking-widest text-metallic font-semibold mb-2 flex items-center gap-2">
+                Instagram Profile URL
+              </label>
+              <input
+                type="url"
+                value={config.instagram_url || ""}
+                onChange={(e) => handleChange("instagram_url", e.target.value)}
+                placeholder="https://instagram.com/yourprofile"
+                className="w-full bg-primary border border-white/10 rounded-md p-3 text-white focus:border-accent outline-none text-sm"
+              />
+            </div>
+            <div>
+              <label className="text-xs uppercase tracking-widest text-metallic font-semibold mb-2 flex items-center gap-2">
+                YouTube Channel URL
+              </label>
+              <input
+                type="url"
+                value={config.youtube_url || ""}
+                onChange={(e) => handleChange("youtube_url", e.target.value)}
+                placeholder="https://youtube.com/c/yourchannel"
+                className="w-full bg-primary border border-white/10 rounded-md p-3 text-white focus:border-accent outline-none text-sm"
+              />
+            </div>
+            <div>
+              <label className="text-xs uppercase tracking-widest text-metallic font-semibold mb-2 flex items-center gap-2">
+                LinkedIn Profile URL
+              </label>
+              <input
+                type="url"
+                value={config.linkedin_url || ""}
+                onChange={(e) => handleChange("linkedin_url", e.target.value)}
+                placeholder="https://linkedin.com/company/yourcompany"
+                className="w-full bg-primary border border-white/10 rounded-md p-3 text-white focus:border-accent outline-none text-sm"
+              />
+            </div>
+          </div>
+        </section>
+
         <div className="bg-accent/10 border border-accent/20 p-4 rounded-lg flex gap-3 items-start">
           <Info className="text-accent shrink-0 mt-0.5" size={18} />
           <p className="text-xs text-accent leading-relaxed">

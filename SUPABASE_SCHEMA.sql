@@ -163,4 +163,32 @@ CREATE POLICY "Allow public to submit enquiries" ON enquiries FOR INSERT WITH CH
 -- ADMIN ALL (To view and manage)
 CREATE POLICY "Allow authenticated users to manage enquiries" ON enquiries 
 FOR ALL USING (auth.role() = 'authenticated');
+
+-- 9. CAPABILITIES (Home Page Machine Showcase)
+CREATE TABLE capabilities (
+  id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  eyebrow TEXT NOT NULL,
+  title TEXT NOT NULL,
+  description TEXT NOT NULL,
+  image_url TEXT NOT NULL,
+  stats JSONB NOT NULL, -- Array of stats objects like [{"label": "Power", "value": "3 kW"}]
+  badge TEXT NOT NULL,
+  display_order INT DEFAULT 0,
+  is_visible BOOLEAN DEFAULT TRUE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+ALTER TABLE capabilities ENABLE ROW LEVEL SECURITY;
+
+-- PUBLIC READ POLICY
+CREATE POLICY "Allow public read-only access to capabilities" ON capabilities FOR SELECT USING (is_visible = true);
+
+-- ADMIN MANAGING POLICY
+CREATE POLICY "Allow authenticated users to manage capabilities" ON capabilities FOR ALL USING (auth.role() = 'authenticated');
+
+-- Seeding initial capabilities
+INSERT INTO capabilities (eyebrow, title, description, image_url, stats, badge, display_order, is_visible) VALUES
+('Laser Cutting', '3kW CNC Fibre Laser Machine', 'Our 3kW CNC fibre laser cutting cells deliver sub-millimetre accuracy on mild steel (up to 16mm), stainless steel (up to 8mm), aluminium (up to 5mm) and GI sheet (up to 4mm). Suited for large bed sizes up to 2m by 4m.', 'https://images.unsplash.com/photo-1565793298595-6a879b1d9492?auto=format&fit=crop&w=1000&q=75', '[{"label": "Power", "value": "3 kW"}, {"label": "Bed Size", "value": "2m x 4m"}, {"label": "Accuracy", "value": "±0.1 mm"}, {"label": "Materials", "value": "MS · SS · Al · GI"}]'::jsonb, '3kW Fibre', 0, true),
+('Metal Bending', '250-Ton CNC Bending Machine', '250-ton programmable hydraulic press brakes form precise bends on mild steel (up to 8mm) and stainless steel (up to 6mm). Fixed bed length of 2500mm for high-capacity industrial forming.', 'https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=1000&q=75', '[{"label": "Capacity", "value": "250 Tons"}, {"label": "Length", "value": "2500 mm"}, {"label": "Accuracy", "value": "±0.05°"}, {"label": "Max MS", "value": "8 mm"}]'::jsonb, '250T Press', 1, true),
+('Laser Welding', 'High-Precision Laser Welding', 'Fibre laser welding produces narrow, deep welds on stainless steel, aluminium and dissimilar metals with minimal heat distortion — ideal for medical, electronics and precision components.', 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1000&q=75', '[{"label": "Precision", "value": "Pinpoint"}, {"label": "Distortion", "value": "Minimal"}, {"label": "Materials", "value": "SS · Al · MS"}, {"label": "Strength", "value": "Structural"}]'::jsonb, 'Fiber Laser', 2, true);
 ```

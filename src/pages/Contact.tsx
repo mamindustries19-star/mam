@@ -179,7 +179,7 @@ const Contact = () => {
                   <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em]">{f.label}</label>
                   <input
                     name={f.name} type={f.type} placeholder={f.placeholder} maxLength={120}
-                    className="mt-1.5 w-full bg-background border border-border rounded-md px-4 py-3 text-sm focus:outline-none focus:border-accent transition-all placeholder:text-muted-foreground/50 font-medium"
+                    className="mt-1.5 w-full bg-background border border-border rounded-md px-4 py-3 text-base focus:outline-none focus:border-accent transition-all placeholder:text-muted-foreground/50 font-medium md:text-sm"
                   />
                   {errors[f.name] && <p className="text-[10px] text-destructive mt-1 font-bold uppercase tracking-wider">{errors[f.name]}</p>}
                 </div>
@@ -242,7 +242,7 @@ const Contact = () => {
                 <textarea
                   name="message" rows={5} maxLength={1000}
                   placeholder="Tell us about your job — material, quantity, drawings, timeline."
-                  className="mt-1.5 w-full bg-background border border-border rounded-md px-4 py-3 text-sm focus:outline-none focus:border-accent transition-all placeholder:text-muted-foreground/50 font-medium resize-none"
+                  className="mt-1.5 w-full bg-background border border-border rounded-md px-4 py-3 text-base focus:outline-none focus:border-accent transition-all placeholder:text-muted-foreground/50 font-medium resize-none md:text-sm"
                 />
                 {errors.message && <p className="text-[10px] text-destructive mt-1 font-bold uppercase tracking-wider">{errors.message}</p>}
               </div>

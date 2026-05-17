@@ -23,7 +23,7 @@ const DEFAULT_SECTIONS: CapabilityItem[] = [
     eyebrow: "Laser Cutting",
     title: "3kW CNC Fibre Laser Machine",
     description: "Our 3kW CNC fibre laser cutting cells deliver sub-millimetre accuracy on mild steel (up to 16mm), stainless steel (up to 8mm), aluminium (up to 5mm) and GI sheet (up to 4mm). Suited for large bed sizes up to 2m by 4m.",
-    image_url: "https://images.unsplash.com/photo-1565793298595-6a879b1d9492?auto=format&fit=crop&w=1000&q=75",
+    image_url: "https://images.unsplash.com/photo-1565793298595-6a879b1d9492?auto=format&fit=crop&w=700&q=70",
     stats: [
       { label: "Power", value: "3 kW" },
       { label: "Bed Size", value: "2m x 4m" },
@@ -37,7 +37,7 @@ const DEFAULT_SECTIONS: CapabilityItem[] = [
     eyebrow: "Metal Bending",
     title: "250-Ton CNC Bending Machine",
     description: "250-ton programmable hydraulic press brakes form precise bends on mild steel (up to 8mm) and stainless steel (up to 6mm). Fixed bed length of 2500mm for high-capacity industrial forming.",
-    image_url: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=1000&q=75",
+    image_url: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=700&q=70",
     stats: [
       { label: "Capacity", value: "250 Tons" },
       { label: "Length", value: "2500 mm" },
@@ -51,7 +51,7 @@ const DEFAULT_SECTIONS: CapabilityItem[] = [
     eyebrow: "Laser Welding",
     title: "High-Precision Laser Welding",
     description: "Fibre laser welding produces narrow, deep welds on stainless steel, aluminium and dissimilar metals with minimal heat distortion — ideal for medical, electronics and precision components.",
-    image_url: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1000&q=75",
+    image_url: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=700&q=70",
     stats: [
       { label: "Precision", value: "Pinpoint" },
       { label: "Distortion", value: "Minimal" },

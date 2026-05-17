@@ -41,8 +41,8 @@ export type Service = {
 };
 
 // Stock industrial imagery (Unsplash CDN, free use)
-const img = (id: string, w = 1200) =>
-  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=70`;
+const img = (id: string, w = 800) =>
+  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=75`;
 
 export const SERVICES: Service[] = [
   {

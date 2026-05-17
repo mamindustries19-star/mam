@@ -135,7 +135,7 @@ const CapabilityManager = () => {
       if (imageFile) {
         const fileExt = imageFile.name.split(".").pop();
         const fileName = `${Date.now()}.${fileExt}`;
-        const filePath = `capabilities/${fileName}`;
+        const filePath = `services/capability-${fileName}`;
 
         const { error: uploadError } = await supabase.storage
           .from("service-images")

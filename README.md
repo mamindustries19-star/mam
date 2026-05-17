@@ -1,73 +1,58 @@
-# Welcome to your Lovable project
+# MAM Industries Platform
 
-## Project info
+**MAM Industries** — Precision Metal Fabrication, Laser Cutting & CNC Bending Command Center.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+This repository contains the full source code for the MAM Industries operational platform and public website, built with modern web technologies to ensure a high-performance, real-time industrial experience.
 
-## How can I edit this code?
+## Platform Features
 
-There are several ways of editing your application.
+* **High-Speed Public Frontend:** SEO-optimized marketing site highlighting technical capabilities, equipment capacity, and industrial services.
+* **Real-Time Admin Command Center:** A secure, database-driven administrative dashboard for operational oversight.
+* **Live CRM (Enquiry Manager):** Captures high-intent project leads directly from the contact forms into a real-time database, enabling instant communication via WhatsApp and Email.
+* **Dynamic Content Sync:** Gallery, Services, and Client listings are synchronized directly with the database, allowing instant public-facing updates without code deployments.
 
-**Use Lovable**
+## Tech Stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+* **Frontend:** React, TypeScript, Vite
+* **Styling:** Tailwind CSS, shadcn-ui, Framer Motion
+* **Backend / Database:** Supabase (PostgreSQL, Realtime, Storage)
+* **Lead Delivery:** Web3Forms + Supabase DB Storage
 
-Changes made via Lovable will be committed automatically to this repo.
+## Local Development
 
-**Use your preferred IDE**
+To run this project locally, you will need Node.js installed.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/Syxd09/mam.git
+   cd mam
+   ```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-Follow these steps:
+3. **Set up Environment Variables:**
+   Create a `.env.local` file in the root directory and add your Supabase credentials:
+   ```env
+   VITE_SUPABASE_URL=your_supabase_url
+   VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+4. **Start the development server:**
+   ```bash
+   npm run dev
+   ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## Deployment
 
-# Step 3: Install the necessary dependencies.
-npm i
+This application is configured for seamless deployment on platforms like Vercel or Netlify. 
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+* **Build Command:** `npm run build`
+* **Output Directory:** `dist`
 
-**Edit a file directly in GitHub**
+Ensure that your deployment platform is configured with the necessary environment variables (`VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`).
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+---
+*Built for MAM Industries, Bengaluru, Karnataka.*

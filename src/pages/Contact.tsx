@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { z } from "zod";
-import { motion } from "framer-motion";
-import { Phone, Mail, MapPin, Clock, MessageCircle, Send } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Phone, Mail, MapPin, Clock, MessageCircle, Send, ChevronDown } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
 import SEO from "@/components/SEO";
 import { SITE, SERVICES } from "@/lib/site";
 import { toast } from "@/hooks/use-toast";
+
+import { getBreadcrumbSchema } from "@/lib/seo";
+import { supabase } from "@/lib/supabase";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Name is too short").max(80),
@@ -15,13 +19,33 @@ const schema = z.object({
 });
 
 const Contact = () => {
+  const [searchParams] = useSearchParams();
+  const preSelectedService = searchParams.get("service");
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  
+  // Custom Dropdown State
+  const [selectedService, setSelectedService] = useState(preSelectedService || "");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
     const data = Object.fromEntries(fd.entries());
+    // Ensure the custom service is included
+    data.service = selectedService;
+    
     const parsed = schema.safeParse(data);
 
     if (!parsed.success) {
@@ -35,9 +59,24 @@ const Contact = () => {
     setSubmitting(true);
 
     try {
-      // Using Web3Forms for reliable email delivery
-      // 1. Get your free Access Key at https://web3forms.com/
-      // 2. Replace 'YOUR_ACCESS_KEY_HERE' with your key below
+      // 1. Save to Supabase (Real-time Lead Tracking)
+      const { error: dbError } = await supabase.from("enquiries").insert([
+        {
+          name: parsed.data.name,
+          email: parsed.data.email,
+          phone: parsed.data.phone,
+          service: parsed.data.service,
+          message: parsed.data.message,
+          status: 'New'
+        }
+      ]);
+
+      if (dbError) {
+        console.error("Database error:", dbError);
+        // We continue anyway so the email still sends
+      }
+
+      // 2. Send via Web3Forms (Email Notification)
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: {
@@ -60,6 +99,7 @@ const Contact = () => {
           description: "We've received your details and will get back to you shortly." 
         });
         (e.target as HTMLFormElement).reset();
+        setSelectedService("");
       } else {
         throw new Error(result.message || "Form submission failed");
       }
@@ -79,6 +119,7 @@ const Contact = () => {
     const form = (e.currentTarget.closest("form") as HTMLFormElement);
     const fd = new FormData(form);
     const data = Object.fromEntries(fd.entries());
+    data.service = selectedService;
     
     if (!data.name || !data.phone || !data.message) {
       toast({ title: "Please fill the form", description: "Fill in your details to generate a WhatsApp message." });
@@ -92,9 +133,14 @@ const Contact = () => {
   return (
     <>
       <SEO
-        title="Contact MAM Industries — Bengaluru Fabrication, Laser Cutting & CNC Bending"
-        description="Reach MAM Industries in Bengaluru for laser cutting, CNC bending, welding and fabrication enquiries. Get a quote within 24 hours."
+        title="Get a Quote — Contact MAM Industries Bengaluru"
+        description="Contact MAM Industries for precise laser cutting, CNC bending, and fabrication enquiries in Bengaluru. Send your drawings for a technical review and quote within 24h."
+        keywords="contact laser cutting bangalore, get fabrication quote bengaluru, industrial enquiry karnataka, sheet metal job work price, mam industries contact, fabrication factory address"
         path="/contact"
+        jsonLd={getBreadcrumbSchema([
+          { name: "Home", url: "/" },
+          { name: "Contact", url: "/contact" }
+        ])}
       />
 
       <section className="bg-primary text-primary-foreground relative overflow-hidden">
@@ -129,54 +175,92 @@ const Contact = () => {
                 { name: "email", label: "Email *", type: "email", placeholder: "you@company.com" },
                 { name: "phone", label: "Phone *", type: "tel", placeholder: "+91" },
               ].map(f => (
-                <div key={f.name} className={f.name === "phone" ? "" : ""}>
-                  <label className="text-xs font-medium text-foreground uppercase tracking-wider">{f.label}</label>
+                <div key={f.name}>
+                  <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em]">{f.label}</label>
                   <input
                     name={f.name} type={f.type} placeholder={f.placeholder} maxLength={120}
-                    className="mt-1.5 w-full bg-background border border-input rounded-md px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent transition"
+                    className="mt-1.5 w-full bg-background border border-border rounded-md px-4 py-3 text-sm focus:outline-none focus:border-accent transition-all placeholder:text-muted-foreground/50 font-medium"
                   />
-                  {errors[f.name] && <p className="text-xs text-destructive mt-1">{errors[f.name]}</p>}
+                  {errors[f.name] && <p className="text-[10px] text-destructive mt-1 font-bold uppercase tracking-wider">{errors[f.name]}</p>}
                 </div>
               ))}
 
-              <div>
-                <label className="text-xs font-medium text-foreground uppercase tracking-wider">Service *</label>
-                <select
-                  name="service"
-                  defaultValue=""
-                  className="mt-1.5 w-full bg-background border border-input rounded-md px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent transition"
+              <div className="relative" ref={dropdownRef}>
+                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em]">Service *</label>
+                <button
+                  type="button"
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className={`mt-1.5 w-full flex items-center justify-between bg-background border rounded-md px-4 py-3 text-sm transition-all text-left ${isDropdownOpen ? "border-accent ring-1 ring-accent" : "border-border"}`}
                 >
-                  <option value="" disabled>Select a service</option>
-                  {SERVICES.map(s => <option key={s.slug} value={s.title}>{s.title}</option>)}
-                  <option value="Other">Other / multiple</option>
-                </select>
-                {errors.service && <p className="text-xs text-destructive mt-1">{errors.service}</p>}
+                  <span className={selectedService ? "text-primary font-medium" : "text-muted-foreground/50 font-medium"}>
+                    {selectedService || "Select a service"}
+                  </span>
+                  <ChevronDown size={16} className={`text-muted-foreground transition-transform duration-300 ${isDropdownOpen ? "rotate-180" : ""}`} />
+                </button>
+                
+                <AnimatePresence>
+                  {isDropdownOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      className="absolute z-20 top-full left-0 right-0 mt-2 bg-background border border-border rounded-lg shadow-xl overflow-hidden max-h-64 overflow-y-auto"
+                    >
+                      <div className="p-1">
+                        {SERVICES.map((s) => (
+                          <button
+                            key={s.slug}
+                            type="button"
+                            onClick={() => {
+                              setSelectedService(s.title);
+                              setIsDropdownOpen(false);
+                            }}
+                            className={`w-full text-left px-3 py-2.5 text-sm rounded-md transition-colors ${selectedService === s.title ? "bg-accent text-white" : "hover:bg-accent/10 text-primary"}`}
+                          >
+                            {s.title}
+                          </button>
+                        ))}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSelectedService("Other / Multiple");
+                            setIsDropdownOpen(false);
+                          }}
+                          className={`w-full text-left px-3 py-2.5 text-sm rounded-md transition-colors ${selectedService === "Other / Multiple" ? "bg-accent text-white" : "hover:bg-accent/10 text-primary"}`}
+                        >
+                          Other / Multiple
+                        </button>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+                {errors.service && <p className="text-[10px] text-destructive mt-1 font-bold uppercase tracking-wider">{errors.service}</p>}
               </div>
 
               <div className="sm:col-span-2">
-                <label className="text-xs font-medium text-foreground uppercase tracking-wider">Project details *</label>
+                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em]">Project details *</label>
                 <textarea
                   name="message" rows={5} maxLength={1000}
                   placeholder="Tell us about your job — material, quantity, drawings, timeline."
-                  className="mt-1.5 w-full bg-background border border-input rounded-md px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-accent transition resize-none"
+                  className="mt-1.5 w-full bg-background border border-border rounded-md px-4 py-3 text-sm focus:outline-none focus:border-accent transition-all placeholder:text-muted-foreground/50 font-medium resize-none"
                 />
-                {errors.message && <p className="text-xs text-destructive mt-1">{errors.message}</p>}
+                {errors.message && <p className="text-[10px] text-destructive mt-1 font-bold uppercase tracking-wider">{errors.message}</p>}
               </div>
 
-              <div className="sm:col-span-2 flex flex-wrap gap-3 pt-1">
+              <div className="sm:col-span-2 flex flex-wrap gap-3 pt-2">
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-6 py-3 rounded-md font-semibold text-sm shadow-accentglow hover:bg-accent/90 transition-all disabled:opacity-60"
+                  className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-8 py-3.5 rounded-md font-bold text-xs uppercase tracking-widest shadow-accentglow hover:bg-accent/90 transition-all disabled:opacity-60"
                 >
-                  {submitting ? "Sending..." : <>Send enquiry <Send size={15} /></>}
+                  {submitting ? "Sending..." : <>Send enquiry <Send size={14} /></>}
                 </button>
                 <button
                   type="button"
                   onClick={handleWhatsAppClick}
-                  className="inline-flex items-center gap-2 bg-highlight text-highlight-foreground px-6 py-3 rounded-md font-semibold text-sm hover:bg-highlight/90 transition-all"
+                  className="inline-flex items-center gap-2 bg-highlight text-highlight-foreground px-8 py-3.5 rounded-md font-bold text-xs uppercase tracking-widest hover:bg-highlight/90 transition-all"
                 >
-                  <MessageCircle size={16} /> Chat on WhatsApp
+                  <MessageCircle size={15} /> Chat on WhatsApp
                 </button>
               </div>
             </form>
@@ -191,15 +275,15 @@ const Contact = () => {
               { Icon: Clock, label: "Working hours", value: SITE.hours },
             ].map(({ Icon, label, value, href }, i) => (
               <div key={i} className="bg-card border border-border rounded-lg p-5 flex gap-4 card-lift">
-                <div className="w-11 h-11 grid place-items-center rounded-md bg-primary text-primary-foreground shrink-0">
-                  <Icon size={18} />
+                <div className="w-12 h-12 grid place-items-center rounded-md bg-primary text-accent shrink-0 border border-white/5 shadow-inner">
+                  <Icon size={20} />
                 </div>
                 <div>
-                  <div className="text-xs uppercase tracking-wider text-muted-foreground font-semibold">{label}</div>
+                  <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em] mb-1">{label}</div>
                   {href ? (
-                    <a href={href} className="font-sora font-semibold text-primary hover:text-accent transition-colors">{value}</a>
+                    <a href={href} className="font-sora font-bold text-primary hover:text-accent transition-colors block text-sm">{value}</a>
                   ) : (
-                    <div className="font-sora font-semibold text-primary">{value}</div>
+                    <div className="font-sora font-bold text-primary text-sm leading-relaxed">{value}</div>
                   )}
                 </div>
               </div>

@@ -17,9 +17,10 @@ export const SITE = {
   },
   hours: "Mon – Sat · 9:00 AM – 8:00 PM",
   rating: 5.0,
-  yearsExperience: 15,
+  yearsExperience: 7,
+  industriesServed: 20,
   projectsCompleted: 1200,
-  mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.317582312684!2d77.5492453!3d12.8876451!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae3fd03f837385%3A0xc464736f1c7d3d1f!2s113%2C%20Kanakapura%20Rd%2C%20Naidu%20Layout%2C%20Yelachenahalli%2C%20Bengaluru%2C%20Karnataka%20560062!5e0!3m2!1sen!2sin!4v1715764000000!5m2!1sen!2sin",
+  mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.155700773836!2d77.5693295!3d12.8944419!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae15dd1e866443%3A0xd448fcf29c0c3a96!2sMAM+Industries!5e0!3m2!1sen!2sin!4v1715800000000!5m2!1sen!2sin",
 };
 
 export const NAV = [

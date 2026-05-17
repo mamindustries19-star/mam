@@ -1,26 +1,69 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { X, Loader2 } from "lucide-react";
 import SEO from "@/components/SEO";
-import { GALLERY } from "@/lib/site";
+import { GALLERY as STATIC_GALLERY } from "@/lib/site";
+import { supabase } from "@/lib/supabase";
+
+import { getBreadcrumbSchema } from "@/lib/seo";
 
 const CATS = ["All", "Laser Cutting", "CNC Bending", "MIG / CO2 Welding", "TIG Welding", "Arc / Spot Welding", "Laser Welding", "Fabrication", "Gates & Grills", "Rolling Shutters", "Sheds", "Laser Marking", "Finishing"];
 
 const Gallery = () => {
   const [cat, setCat] = useState("All");
   const [active, setActive] = useState<number | null>(null);
+  const [gallery, setGallery] = useState(STATIC_GALLERY);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchGallery = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("gallery")
+          .select("*")
+          .order("display_order", { ascending: true });
+        
+        if (!error && data && data.length > 0) {
+          setGallery(data.map(item => ({
+            src: item.image_url,
+            title: item.title,
+            cat: item.category
+          })));
+        }
+      } catch (err) {
+        console.warn("Using static gallery data as fallback", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGallery();
+  }, []);
 
   const filtered = useMemo(
-    () => (cat === "All" ? GALLERY : GALLERY.filter(g => g.cat === cat)),
-    [cat]
+    () => (cat === "All" ? gallery : gallery.filter(g => g.cat === cat)),
+    [cat, gallery]
   );
+
+  if (loading) {
+    return (
+      <div className="min-h-[50vh] flex items-center justify-center bg-background">
+        <Loader2 className="w-10 h-10 animate-spin text-accent" />
+      </div>
+    );
+  }
 
   return (
     <>
       <SEO
-        title="Project Gallery — Fabrication, Laser Cutting & CNC Bending Work · MAM Industries"
-        description="Browse fabrication, laser cutting, welding and finishing projects delivered by MAM Industries across Bengaluru and South India."
+        title="Industrial Project Gallery — Fabricated Components & Work Samples"
+        description="View our portfolio of precision-fabricated metal components, laser-cut panels, and CNC-bent assemblies. See why OEMs and architects choose MAM Industries in Bengaluru."
+        keywords="fabrication works bangalore, laser cutting portfolio, metal components gallery, industrial project samples karnataka, custom metalwork showcases, cnc bending results"
         path="/gallery"
+        jsonLd={getBreadcrumbSchema([
+          { name: "Home", url: "/" },
+          { name: "Gallery", url: "/gallery" }
+        ])}
       />
 
       <section className="bg-primary text-primary-foreground relative overflow-hidden">

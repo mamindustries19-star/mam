@@ -10,13 +10,16 @@ import GalleryPreview from "@/components/home/GalleryPreview";
 import Testimonials from "@/components/home/Testimonials";
 import FAQ from "@/components/home/FAQ";
 import ContactCTA from "@/components/home/ContactCTA";
+import { getLocalBusinessSchema } from "@/lib/seo";
 
 const Home = () => (
   <>
     <SEO
-      title="MAM Industries — Laser Cutting, CNC Bending & Metal Fabrication in Bengaluru"
-      description="Precision laser cutting, CNC bending, MIG/TIG/CO2/laser welding, fabrication and powder coating in Bengaluru. Trusted by OEMs, architects and contractors."
+      title="Precision Laser Cutting, CNC Bending & Metal Fabrication in Bengaluru"
+      description="MAM Industries: Leading B2B partner for precision 3kW fibre laser cutting, CNC bending, and expert welding in Bengaluru. 7+ years of industrial excellence. Get a quote in 24h."
+      keywords="laser cutting bengaluru, cnc bending bangalore, metal fabrication karnataka, industrial laser cutting, sheet metal fabrication, mig tig welding bangalore, mam industries"
       path="/"
+      jsonLd={getLocalBusinessSchema()}
     />
     <Hero />
     <TrustedBy />

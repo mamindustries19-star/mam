@@ -41,7 +41,8 @@ const Contact = () => {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const fd = new FormData(e.currentTarget);
+    const formElement = e.currentTarget;
+    const fd = new FormData(formElement);
     const data = Object.fromEntries(fd.entries());
     // Ensure the custom service is included
     data.service = selectedService;
@@ -77,7 +78,7 @@ const Contact = () => {
       }
 
       // 2. Send via Web3Forms (Email Notification)
-      const formData = new FormData(e.currentTarget);
+      const formData = new FormData(formElement);
       formData.append("access_key", "5e6757af-ab7d-4b52-8b5d-8608896bbdde");
       formData.append("subject", `New Enquiry: ${data.service} from ${data.name}`);
       formData.append("from_name", "MAM Industries Website");
@@ -94,7 +95,7 @@ const Contact = () => {
           title: "Enquiry Sent Successfully!", 
           description: "We've received your details and will get back to you shortly." 
         });
-        (e.target as HTMLFormElement).reset();
+        formElement.reset();
         setSelectedService("");
       } else {
         throw new Error(result.message || "Form submission failed");

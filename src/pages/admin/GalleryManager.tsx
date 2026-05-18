@@ -99,6 +99,18 @@ const GalleryManager = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
+      
+      // Sane maximum limit check
+      if (file.size > 20 * 1024 * 1024) {
+        toast.error("File is too large! Please choose an image under 20MB.");
+        e.target.value = "";
+        return;
+      }
+      
+      if (file.size > 2 * 1024 * 1024) {
+        toast.info("Note: Large image selected. If the upload fails with a Bad Request, you may need to compress the image or increase the limit in your Supabase Storage settings.");
+      }
+
       setImageFile(file);
       setPreviewUrl(URL.createObjectURL(file));
     }
@@ -176,7 +188,17 @@ const GalleryManager = () => {
       resetForm();
       fetchGallery();
     } catch (error: any) {
-      toast.error(error.message || "Upload failed");
+      console.error("Storage upload error details:", error);
+      const isSizeLimit = error.message?.toLowerCase().includes("too large") || 
+                          error.message?.toLowerCase().includes("size") ||
+                          error.statusCode === "400" ||
+                          error.status === 400;
+      
+      if (isSizeLimit) {
+        toast.error("Upload failed: File size exceeds the maximum limit of your Supabase Storage bucket. Please compress the image or increase the size limit in your Supabase dashboard settings.");
+      } else {
+        toast.error(error.message || "Upload failed. Please check your storage bucket configuration.");
+      }
     } finally {
       setUploading(false);
     }

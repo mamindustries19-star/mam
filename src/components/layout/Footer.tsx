@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Clock, Facebook, Instagram, Youtube, Star } from "lucide-react";
 import { NAV, SERVICES, SITE } from "@/lib/site";
 import { supabase } from "@/lib/supabase";
-import Logo from "./Logo";
+import logoCombinedDark from "@/assets/mam-combined-logo-dark.png";
 
 const Footer = () => {
   const [config, setConfig] = useState<any>({
@@ -44,12 +44,12 @@ const Footer = () => {
       <div className="absolute inset-x-0 top-0 h-1 stripe-accent" />
       <div className="container py-16 grid gap-10 md:grid-cols-12">
         <div className="md:col-span-4">
-          <div className="flex items-center gap-3 mb-5">
-            <Logo className="w-16 h-16" invert />
-            <div className="leading-tight border-l border-white/15 pl-3">
-              <div className="text-[10px] uppercase tracking-[0.22em] text-metallic">Precision</div>
-              <div className="text-[10px] uppercase tracking-[0.22em] text-accent font-semibold">Fabrication</div>
-            </div>
+          <div className="flex items-center mb-5">
+            <img
+              src={logoCombinedDark}
+              alt="MAM Industries"
+              className="h-16 w-auto object-contain drop-shadow-[0_2px_8px_hsl(var(--accent)/0.25)]"
+            />
           </div>
           <p className="text-sm text-metallic leading-relaxed mb-5">
             Bengaluru-based metal fabrication and laser cutting partner trusted by OEMs, architects and contractors across Karnataka.
@@ -74,7 +74,7 @@ const Footer = () => {
           <h4 className="text-sm font-semibold uppercase tracking-wider mb-4 text-white">Services</h4>
           <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-y-2.5 gap-x-4 text-sm text-metallic">
             {services.map(s => (
-              <li key={s.slug}><Link to="/services" className="hover:text-accent transition-colors">{s.title}</Link></li>
+              <li key={s.slug}><Link to={`/services#${s.slug}`} className="hover:text-accent transition-colors">{s.title}</Link></li>
             ))}
           </ul>
         </div>

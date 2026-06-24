@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { z } from "zod";
 import { motion, AnimatePresence } from "framer-motion";
-import { Phone, Mail, MapPin, Clock, MessageCircle, Send, ChevronDown } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, MessageCircle, Send, ChevronDown, CheckCircle2 } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 import SEO from "@/components/SEO";
 import { SITE, SERVICES } from "@/lib/site";
@@ -22,12 +22,24 @@ const Contact = () => {
   const [searchParams] = useSearchParams();
   const preSelectedService = searchParams.get("service");
   const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   
   // Custom Dropdown State
   const [selectedService, setSelectedService] = useState(preSelectedService || "");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (formRef.current) {
+        formRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }, 900);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -114,10 +126,7 @@ const Contact = () => {
       const result = await response.json();
 
       if (result.success) {
-        toast({ 
-          title: "Enquiry Sent Successfully!", 
-          description: "We've received your details and will get back to you shortly." 
-        });
+        setSubmitted(true);
         formElement.reset();
         setSelectedService("");
       } else {
@@ -180,110 +189,137 @@ const Contact = () => {
         <div className="container grid lg:grid-cols-12 gap-10">
           {/* Form */}
           <motion.div
+            ref={formRef}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
             className="lg:col-span-7 bg-card border border-border rounded-lg p-6 md:p-9 shadow-sm"
           >
-            <h2 className="font-sora font-bold text-2xl text-primary mb-1">Send an enquiry</h2>
-            <p className="text-sm text-muted-foreground mb-6">Fields marked with * are required.</p>
-
-            <form onSubmit={onSubmit} className="grid sm:grid-cols-2 gap-4">
-              {[
-                { name: "name", label: "Full name *", type: "text", placeholder: "Your name" },
-                { name: "email", label: "Email *", type: "email", placeholder: "you@company.com" },
-                { name: "phone", label: "Phone *", type: "tel", placeholder: "+91" },
-              ].map(f => (
-                <div key={f.name}>
-                  <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em]">{f.label}</label>
-                  <input
-                    name={f.name} type={f.type} placeholder={f.placeholder} maxLength={120}
-                    className="mt-1.5 w-full bg-background border border-border rounded-md px-4 py-3 text-base focus:outline-none focus:border-accent transition-all placeholder:text-muted-foreground/50 font-medium md:text-sm"
-                  />
-                  {errors[f.name] && <p className="text-[10px] text-destructive mt-1 font-bold uppercase tracking-wider">{errors[f.name]}</p>}
+            {submitted ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4 }}
+                className="flex flex-col items-center justify-center text-center py-12 px-4 min-h-[400px]"
+              >
+                <div className="w-16 h-16 bg-emerald-500/10 text-emerald-500 rounded-full flex items-center justify-center mb-6 ring-8 ring-emerald-500/5">
+                  <CheckCircle2 size={36} className="text-emerald-500" />
                 </div>
-              ))}
-
-              <div className="relative" ref={dropdownRef}>
-                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em]">Service *</label>
+                <h2 className="font-sora font-bold text-2xl text-primary mb-3">Thank you!</h2>
+                <p className="text-sm text-muted-foreground max-w-md mx-auto mb-8 leading-relaxed">
+                  Your enquiry has been sent successfully. We've received your details and will get back to you shortly.
+                </p>
                 <button
                   type="button"
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className={`mt-1.5 w-full flex items-center justify-between bg-background border rounded-md px-4 py-3 text-sm transition-all text-left ${isDropdownOpen ? "border-accent ring-1 ring-accent" : "border-border"}`}
+                  onClick={() => setSubmitted(false)}
+                  className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-6 py-3 rounded-md font-bold text-xs uppercase tracking-widest hover:bg-accent/90 transition-all shadow-md"
                 >
-                  <span className={selectedService ? "text-primary font-medium" : "text-muted-foreground/50 font-medium"}>
-                    {selectedService || "Select a service"}
-                  </span>
-                  <ChevronDown size={16} className={`text-muted-foreground transition-transform duration-300 ${isDropdownOpen ? "rotate-180" : ""}`} />
+                  Send another enquiry
                 </button>
-                
-                <AnimatePresence>
-                  {isDropdownOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      className="absolute z-20 top-full left-0 right-0 mt-2 bg-background border border-border rounded-lg shadow-xl overflow-hidden max-h-64 overflow-y-auto"
+              </motion.div>
+            ) : (
+              <>
+                <h2 className="font-sora font-bold text-2xl text-primary mb-1">Send an enquiry</h2>
+                <p className="text-sm text-muted-foreground mb-6">Fields marked with * are required.</p>
+
+                <form onSubmit={onSubmit} className="grid sm:grid-cols-2 gap-4">
+                  {[
+                    { name: "name", label: "Full name *", type: "text", placeholder: "Your name" },
+                    { name: "email", label: "Email *", type: "email", placeholder: "you@company.com" },
+                    { name: "phone", label: "Phone *", type: "tel", placeholder: "+91" },
+                  ].map(f => (
+                    <div key={f.name}>
+                      <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em]">{f.label}</label>
+                      <input
+                        name={f.name} type={f.type} placeholder={f.placeholder} maxLength={120}
+                        className="mt-1.5 w-full bg-background border border-border rounded-md px-4 py-3 text-base focus:outline-none focus:border-accent transition-all placeholder:text-muted-foreground/50 font-medium md:text-sm"
+                      />
+                      {errors[f.name] && <p className="text-[10px] text-destructive mt-1 font-bold uppercase tracking-wider">{errors[f.name]}</p>}
+                    </div>
+                  ))}
+
+                  <div className="relative" ref={dropdownRef}>
+                    <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em]">Service *</label>
+                    <button
+                      type="button"
+                      onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                      className={`mt-1.5 w-full flex items-center justify-between bg-background border rounded-md px-4 py-3 text-sm transition-all text-left ${isDropdownOpen ? "border-accent ring-1 ring-accent" : "border-border"}`}
                     >
-                      <div className="p-1">
-                        {SERVICES.map((s) => (
-                          <button
-                            key={s.slug}
-                            type="button"
-                            onClick={() => {
-                              setSelectedService(s.title);
-                              setIsDropdownOpen(false);
-                            }}
-                            className={`w-full text-left px-3 py-2.5 text-sm rounded-md transition-colors ${selectedService === s.title ? "bg-accent text-white" : "hover:bg-accent/10 text-primary"}`}
-                          >
-                            {s.title}
-                          </button>
-                        ))}
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setSelectedService("Other / Multiple");
-                            setIsDropdownOpen(false);
-                          }}
-                          className={`w-full text-left px-3 py-2.5 text-sm rounded-md transition-colors ${selectedService === "Other / Multiple" ? "bg-accent text-white" : "hover:bg-accent/10 text-primary"}`}
+                      <span className={selectedService ? "text-primary font-medium" : "text-muted-foreground/50 font-medium"}>
+                        {selectedService || "Select a service"}
+                      </span>
+                      <ChevronDown size={16} className={`text-muted-foreground transition-transform duration-300 ${isDropdownOpen ? "rotate-180" : ""}`} />
+                    </button>
+                    
+                    <AnimatePresence>
+                      {isDropdownOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 10 }}
+                          className="absolute z-20 top-full left-0 right-0 mt-2 bg-background border border-border rounded-lg shadow-xl overflow-hidden max-h-64 overflow-y-auto"
                         >
-                          Other / Multiple
-                        </button>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-                {errors.service && <p className="text-[10px] text-destructive mt-1 font-bold uppercase tracking-wider">{errors.service}</p>}
-              </div>
+                          <div className="p-1">
+                            {SERVICES.map((s) => (
+                              <button
+                                key={s.slug}
+                                type="button"
+                                onClick={() => {
+                                  setSelectedService(s.title);
+                                  setIsDropdownOpen(false);
+                                }}
+                                className={`w-full text-left px-3 py-2.5 text-sm rounded-md transition-colors ${selectedService === s.title ? "bg-accent text-white" : "hover:bg-accent/10 text-primary"}`}
+                              >
+                                {s.title}
+                              </button>
+                            ))}
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setSelectedService("Other / Multiple");
+                                  setIsDropdownOpen(false);
+                              }}
+                              className={`w-full text-left px-3 py-2.5 text-sm rounded-md transition-colors ${selectedService === "Other / Multiple" ? "bg-accent text-white" : "hover:bg-accent/10 text-primary"}`}
+                            >
+                              Other / Multiple
+                            </button>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                    {errors.service && <p className="text-[10px] text-destructive mt-1 font-bold uppercase tracking-wider">{errors.service}</p>}
+                  </div>
 
-              <div className="sm:col-span-2">
-                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em]">Project details *</label>
-                <textarea
-                  name="message" rows={5} maxLength={1000}
-                  placeholder="Tell us about your job — material, quantity, drawings, timeline."
-                  className="mt-1.5 w-full bg-background border border-border rounded-md px-4 py-3 text-base focus:outline-none focus:border-accent transition-all placeholder:text-muted-foreground/50 font-medium resize-none md:text-sm"
-                />
-                {errors.message && <p className="text-[10px] text-destructive mt-1 font-bold uppercase tracking-wider">{errors.message}</p>}
-              </div>
+                  <div className="sm:col-span-2">
+                    <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em]">Project details *</label>
+                    <textarea
+                      name="message" rows={5} maxLength={1000}
+                      placeholder="Tell us about your job — material, quantity, drawings, timeline."
+                      className="mt-1.5 w-full bg-background border border-border rounded-md px-4 py-3 text-base focus:outline-none focus:border-accent transition-all placeholder:text-muted-foreground/50 font-medium resize-none md:text-sm"
+                    />
+                    {errors.message && <p className="text-[10px] text-destructive mt-1 font-bold uppercase tracking-wider">{errors.message}</p>}
+                  </div>
 
-              <div className="sm:col-span-2 flex flex-wrap gap-3 pt-2">
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-8 py-3.5 rounded-md font-bold text-xs uppercase tracking-widest shadow-accentglow hover:bg-accent/90 transition-all disabled:opacity-60"
-                >
-                  {submitting ? "Sending..." : <>Send enquiry <Send size={14} /></>}
-                </button>
-                <button
-                  type="button"
-                  onClick={handleWhatsAppClick}
-                  className="inline-flex items-center gap-2 bg-highlight text-highlight-foreground px-8 py-3.5 rounded-md font-bold text-xs uppercase tracking-widest hover:bg-highlight/90 transition-all"
-                >
-                  <MessageCircle size={15} /> Chat on WhatsApp
-                </button>
-              </div>
-            </form>
+                  <div className="sm:col-span-2 flex flex-wrap gap-3 pt-2">
+                    <button
+                      type="submit"
+                      disabled={submitting}
+                      className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-8 py-3.5 rounded-md font-bold text-xs uppercase tracking-widest shadow-accentglow hover:bg-accent/90 transition-all disabled:opacity-60"
+                    >
+                      {submitting ? "Sending..." : <>Send enquiry <Send size={14} /></>}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleWhatsAppClick}
+                      className="inline-flex items-center gap-2 bg-highlight text-highlight-foreground px-8 py-3.5 rounded-md font-bold text-xs uppercase tracking-widest hover:bg-highlight/90 transition-all"
+                    >
+                      <MessageCircle size={15} /> Chat on WhatsApp
+                    </button>
+                  </div>
+                </form>
+              </>
+            )}
           </motion.div>
 
           {/* Details */}

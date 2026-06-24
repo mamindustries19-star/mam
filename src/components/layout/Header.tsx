@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { Menu, X, Phone, Mail, MapPin } from "lucide-react";
 import { NAV, SITE } from "@/lib/site";
-import Logo from "./Logo";
+import logoCombinedLight from "@/assets/mam-combined-logo.png";
+import logoCombinedDark from "@/assets/mam-combined-logo-dark.png";
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -41,11 +42,16 @@ const Header = () => {
       <nav className={`backdrop-blur-md border-b transition-all duration-300 ${scrolled ? "bg-background/95 border-border shadow-sm" : "bg-background/80 border-transparent"}`}>
         <div className="container flex items-center justify-between h-[72px]">
           <Link to="/" className="group flex items-center gap-3">
-            <Logo className="w-12 h-12 md:w-14 md:h-14 drop-shadow-[0_2px_8px_hsl(var(--accent)/0.25)]" />
-            <div className="leading-tight hidden sm:block border-l border-border pl-3">
-              <div className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">Precision</div>
-              <div className="text-[10px] uppercase tracking-[0.22em] text-accent font-semibold">Fabrication</div>
-            </div>
+            <img
+              src={logoCombinedLight}
+              alt="MAM Industries"
+              className="h-12 md:h-16 w-auto object-contain block dark:hidden drop-shadow-[0_2px_8px_hsl(var(--accent)/0.25)]"
+            />
+            <img
+              src={logoCombinedDark}
+              alt="MAM Industries"
+              className="h-12 md:h-16 w-auto object-contain hidden dark:block drop-shadow-[0_2px_8px_hsl(var(--accent)/0.25)]"
+            />
           </Link>
 
           <ul className="hidden md:flex items-center gap-1">

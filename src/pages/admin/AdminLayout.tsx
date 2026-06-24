@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { motion, AnimatePresence } from "framer-motion";
-import Logo from "@/components/layout/Logo";
+import logoCombinedDark from "@/assets/mam-combined-logo-dark.png";
 
 const AdminLayout = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -42,12 +42,12 @@ const AdminLayout = () => {
     <div className="min-h-screen bg-primary flex">
       {/* Sidebar - Desktop */}
       <aside className="hidden lg:flex flex-col w-64 bg-secondary border-r border-white/5 sticky top-0 h-screen">
-        <div className="p-6 border-b border-white/5 flex items-center gap-3">
-          <Logo className="w-10 h-10" invert />
-          <div className="leading-tight">
-            <div className="text-[10px] uppercase tracking-widest text-metallic">Control</div>
-            <div className="text-xs font-bold text-accent uppercase tracking-widest">Center</div>
-          </div>
+        <div className="p-6 border-b border-white/5 flex items-center">
+          <img
+            src={logoCombinedDark}
+            alt="MAM Industries"
+            className="h-12 w-auto object-contain"
+          />
         </div>
 
         <nav className="flex-1 p-4 space-y-1 mt-4">
@@ -90,9 +90,12 @@ const AdminLayout = () => {
 
       {/* Mobile Header */}
       <div className="lg:hidden fixed top-0 inset-x-0 bg-secondary border-b border-white/5 z-50 px-4 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Logo className="w-8 h-8" invert />
-          <span className="font-bold text-white text-sm uppercase tracking-widest">Admin</span>
+        <div className="flex items-center">
+          <img
+            src={logoCombinedDark}
+            alt="MAM Industries"
+            className="h-10 w-auto object-contain"
+          />
         </div>
         <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-white">
           {isMobileMenuOpen ? <X /> : <Menu />}

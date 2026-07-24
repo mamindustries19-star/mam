@@ -54,9 +54,9 @@ const ServicesOverview = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.5, delay: (i % 3) * 0.05 }}
-              className="group relative bg-card border border-border rounded-lg overflow-hidden card-lift"
+              className="group relative bg-card border border-border rounded-lg overflow-hidden card-lift flex flex-col h-full"
             >
-              <div className="aspect-[16/10] overflow-hidden bg-secondary">
+              <div className="aspect-[16/10] overflow-hidden bg-secondary shrink-0 relative">
                 <img
                   src={s.image_url}
                   alt={s.title}
@@ -67,12 +67,16 @@ const ServicesOverview = () => {
                   {String(i + 1).padStart(2, "0")}
                 </div>
               </div>
-              <div className="p-5">
-                <h3 className="font-sora font-semibold text-lg text-primary mb-1.5 group-hover:text-accent transition-colors">{s.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-2">{s.short_desc}</p>
-                <Link to={`/services#${s.slug}`} className="inline-flex items-center gap-1 text-xs font-semibold text-accent uppercase tracking-wider link-underline">
-                  Explore service <ArrowUpRight size={14} />
-                </Link>
+              <div className="p-5 flex flex-col flex-1 justify-between">
+                <div>
+                  <h3 className="font-sora font-semibold text-lg text-primary mb-1.5 group-hover:text-accent transition-colors">{s.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-2">{s.short_desc}</p>
+                </div>
+                <div className="pt-2">
+                  <Link to={`/services#${s.slug}`} className="inline-flex items-center gap-1 text-xs font-semibold text-accent uppercase tracking-wider link-underline">
+                    Explore service <ArrowUpRight size={14} />
+                  </Link>
+                </div>
               </div>
             </motion.div>
           ))}

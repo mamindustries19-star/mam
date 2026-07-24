@@ -240,9 +240,9 @@ const EnquiryManager = () => {
               initial={{ opacity: 0, scale: 0.95, x: 20 }}
               animate={{ opacity: 1, scale: 1, x: 0 }}
               exit={{ opacity: 0, scale: 0.95, x: 20 }}
-              className="relative w-full max-w-2xl bg-secondary border border-white/10 rounded-xl shadow-2xl overflow-hidden"
+              className="relative w-full max-w-2xl bg-secondary border border-white/10 rounded-xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
             >
-              <div className="p-6 border-b border-white/5 flex justify-between items-center bg-white/5">
+              <div className="p-6 border-b border-white/5 flex justify-between items-center bg-white/5 shrink-0">
                 <div>
                   <h2 className="text-lg font-bold text-white uppercase tracking-widest">Enquiry Details</h2>
                   <p className="text-xs text-metallic">Received on {format(new Date(selectedEnquiry.created_at), "MMMM d, yyyy 'at' h:mm a")}</p>
@@ -252,8 +252,8 @@ const EnquiryManager = () => {
                 </button>
               </div>
 
-              <div className="p-8 space-y-8">
-                <div className="grid sm:grid-cols-2 gap-8">
+              <div className="p-6 md:p-8 space-y-6 md:space-y-8 overflow-y-auto flex-1">
+                <div className="grid sm:grid-cols-2 gap-6 md:gap-8">
                   <div>
                     <label className="text-[10px] uppercase tracking-widest text-metallic font-bold mb-2 block">Customer Information</label>
                     <div className="space-y-3">
@@ -263,7 +263,7 @@ const EnquiryManager = () => {
                       </div>
                       <a href={`mailto:${selectedEnquiry.email}`} className="flex items-center gap-3 text-metallic hover:text-accent transition-colors">
                         <div className="w-8 h-8 rounded bg-primary grid place-items-center"><Mail size={16} /></div>
-                        <span className="text-sm">{selectedEnquiry.email}</span>
+                        <span className="text-sm break-all">{selectedEnquiry.email}</span>
                       </a>
                       <a href={`tel:${selectedEnquiry.phone}`} className="flex items-center gap-3 text-metallic hover:text-accent transition-colors">
                         <div className="w-8 h-8 rounded bg-primary grid place-items-center"><Phone size={16} /></div>
@@ -300,13 +300,13 @@ const EnquiryManager = () => {
 
                 <div>
                   <label className="text-[10px] uppercase tracking-widest text-metallic font-bold mb-2 block">Project Message</label>
-                  <div className="p-4 bg-primary/30 border border-white/5 rounded-lg text-white text-sm leading-relaxed whitespace-pre-wrap font-medium">
+                  <div className="p-4 bg-primary/30 border border-white/5 rounded-lg text-white text-sm leading-relaxed whitespace-pre-wrap font-medium break-words max-h-96 overflow-y-auto">
                     {selectedEnquiry.message}
                   </div>
                 </div>
               </div>
 
-              <div className="p-6 bg-white/5 border-t border-white/5 flex justify-between items-center">
+              <div className="p-6 bg-white/5 border-t border-white/5 flex flex-wrap justify-between items-center gap-4 shrink-0">
                 <button
                   onClick={() => deleteEnquiry(selectedEnquiry.id)}
                   className="flex items-center gap-2 text-red-500 hover:bg-red-500/10 px-4 py-2 rounded-md transition-all text-xs font-bold uppercase tracking-widest"
@@ -314,7 +314,7 @@ const EnquiryManager = () => {
                   <Trash2 size={16} />
                   Delete Enquiry
                 </button>
-                <div className="flex gap-3">
+                <div className="flex flex-wrap gap-3">
                   <a 
                     href={`https://wa.me/${selectedEnquiry.phone.replace(/\D/g, '')}`}
                     target="_blank"

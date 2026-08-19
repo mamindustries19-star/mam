@@ -24,6 +24,7 @@ const Testimonials = () => {
   }, []);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [selectedReview, setSelectedReview] = useState<any | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [newReview, setNewReview] = useState({ name: "", company: "", content: "", rating: 5 });
 
@@ -87,35 +88,54 @@ const Testimonials = () => {
         <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-primary via-primary/80 to-transparent z-20" />
         <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-primary via-primary/80 to-transparent z-20" />
 
-        <div className="flex gap-8 animate-marquee-slow w-max py-4 hover:[animation-play-state:paused]">
+        <div className="flex gap-6 animate-marquee-slow w-max py-4 hover:[animation-play-state:paused]">
           {[...reviews, ...reviews].map((t, i) => (
             <figure
               key={`${t.id}-${i}`}
-              className="w-[380px] md:w-[450px] bg-secondary/30 backdrop-blur-md border border-white/10 rounded-3xl p-10 relative group transition-all duration-500 hover:border-accent/40 hover:bg-secondary/40 flex-shrink-0"
+              onClick={() => setSelectedReview(t)}
+              className="w-[340px] md:w-[400px] h-[340px] bg-secondary/30 backdrop-blur-md border border-white/10 rounded-3xl p-8 relative group transition-all duration-500 hover:border-accent/40 hover:bg-secondary/40 flex-shrink-0 flex flex-col justify-between cursor-pointer"
             >
-              <Quote size={40} className="text-accent/10 absolute top-8 right-10 group-hover:text-accent/20 transition-colors" />
-              
-              <div className="flex gap-1.5 mb-8">
-                {Array.from({ length: 5 }).map((_, k) => (
-                  <Star 
-                    key={k} 
-                    size={18} 
-                    className={k < (t.rating || 5) ? "fill-accent text-accent" : "text-white/5"} 
-                  />
-                ))}
+              <div>
+                <div className="flex items-center justify-between gap-4 mb-6">
+                  <div className="flex gap-1.5">
+                    {Array.from({ length: 5 }).map((_, k) => (
+                      <Star 
+                        key={k} 
+                        size={16} 
+                        className={k < (t.rating || 5) ? "fill-accent text-accent" : "text-white/10"} 
+                      />
+                    ))}
+                  </div>
+                  <Quote size={28} className="text-accent/15 group-hover:text-accent/30 transition-colors shrink-0" />
+                </div>
+
+                <blockquote className="text-white/90 leading-relaxed text-base italic line-clamp-4 mb-3">
+                  "{t.content}"
+                </blockquote>
+
+                {t.content && t.content.length > 80 && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedReview(t);
+                    }}
+                    className="text-xs font-bold text-accent hover:underline inline-flex items-center gap-1"
+                  >
+                    See more...
+                  </button>
+                )}
               </div>
 
-              <blockquote className="text-white/90 leading-relaxed mb-10 text-lg md:text-xl font-medium italic">
-                "{t.content}"
-              </blockquote>
-
-              <figcaption className="flex items-center gap-5 border-t border-white/5 pt-8">
-                <div className="h-12 w-12 rounded-xl bg-accent/20 flex items-center justify-center font-bold text-accent text-lg shadow-inner uppercase">
+              <figcaption className="flex items-center gap-4 border-t border-white/5 pt-5 mt-2">
+                <div className="h-10 w-10 rounded-xl bg-accent/20 flex items-center justify-center font-bold text-accent text-base shadow-inner uppercase shrink-0">
                   {t.customer_name?.[0]}
                 </div>
-                <div>
-                  <div className="font-sora font-bold text-white text-lg tracking-tight">{t.customer_name}</div>
-                  <div className="text-[10px] font-black text-accent uppercase tracking-[0.25em]">{t.company_name}</div>
+                <div className="min-w-0 flex-1">
+                  <div className="font-sora font-bold text-white text-base tracking-tight truncate">{t.customer_name}</div>
+                  {t.company_name && (
+                    <div className="text-[10px] font-black text-accent uppercase tracking-[0.2em] truncate">{t.company_name}</div>
+                  )}
                 </div>
               </figcaption>
             </figure>
@@ -247,6 +267,61 @@ const Testimonials = () => {
                   </div>
                 </button>
               </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Full Review Details Popup Modal */}
+      <AnimatePresence>
+        {selectedReview && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedReview(null)}
+              className="absolute inset-0 bg-primary/95 backdrop-blur-xl"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 10 }}
+              className="relative w-full max-w-xl bg-secondary border border-white/10 rounded-2xl shadow-[0_32px_64px_-16px_rgba(0,0,0,0.6)] overflow-hidden z-10 p-6 md:p-8"
+            >
+              <div className="flex justify-between items-start mb-6">
+                <div className="flex gap-1.5">
+                  {Array.from({ length: 5 }).map((_, k) => (
+                    <Star 
+                      key={k} 
+                      size={20} 
+                      className={k < (selectedReview.rating || 5) ? "fill-accent text-accent" : "text-white/10"} 
+                    />
+                  ))}
+                </div>
+                <button 
+                  onClick={() => setSelectedReview(null)}
+                  className="w-9 h-9 flex items-center justify-center rounded-full bg-white/5 text-metallic hover:text-white hover:bg-white/10 transition-all border border-white/5"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              <blockquote className="text-white text-lg md:text-xl leading-relaxed italic mb-8 max-h-[50vh] overflow-y-auto pr-2">
+                "{selectedReview.content}"
+              </blockquote>
+
+              <div className="flex items-center gap-4 border-t border-white/10 pt-6">
+                <div className="h-12 w-12 rounded-xl bg-accent/20 flex items-center justify-center font-bold text-accent text-xl shadow-inner uppercase shrink-0">
+                  {selectedReview.customer_name?.[0]}
+                </div>
+                <div>
+                  <div className="font-sora font-bold text-white text-lg">{selectedReview.customer_name}</div>
+                  {selectedReview.company_name && (
+                    <div className="text-xs font-bold text-accent uppercase tracking-[0.2em]">{selectedReview.company_name}</div>
+                  )}
+                </div>
+              </div>
             </motion.div>
           </div>
         )}
